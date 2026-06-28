@@ -138,3 +138,7 @@ python train_survival.py \
   --seed 42 \
   --eval_only
 ```
+
+## License
+
+The HyperMIL source code is released under the MIT License. TCGA-derived clinical tables and split files are provided for research reproducibility and remain subject to TCGA/GDC data-use policies.
