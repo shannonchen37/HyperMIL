@@ -30,13 +30,10 @@ HyperMIL/
 |   |-- preprocess_wsi.py
 |   `-- run_preprocess.sh
 `-- WSI_data/
-    |-- TCGA-STAD/
-    |-- TCGA-THCA/
-    |-- TCGA-CHOL/
-    `-- TCGA-LIHC/
+    `-- README.md
 ```
 
-The release package includes clinical tables and reference split files for four TCGA cohorts: `STAD`, `THCA`, `CHOL`, and `LIHC`. Raw WSIs, extracted patch features, constructed hypergraphs, trained checkpoints, and training logs are not included.
+Dataset files are intentionally not included in this repository. Prepare TCGA clinical tables, split files, raw WSIs, extracted patch features, and generated hypergraphs locally according to your data-use policy.
 
 ## Environment
 
@@ -57,6 +54,8 @@ svs_process/raw_svs/TCGA-STAD/*.svs
 WSI_data/TCGA-STAD/clinical.tsv
 WSI_data/TCGA-STAD/splits_seed42/
 ```
+
+See `WSI_data/README.md` for the required clinical fields. Do not commit raw slides, clinical tables, split lists, patch features, or generated hypergraphs unless redistribution is explicitly permitted.
 
 Edit `svs_process/preprocess_config.yaml` before preprocessing:
 

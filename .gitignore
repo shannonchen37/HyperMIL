@@ -1,0 +1,64 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Dataset files are not released with the code.
+WSI_data/*
+!WSI_data/README.md
+
+# Raw WSI files and preprocessing outputs
+svs_process/raw_svs/
+**/patch_ft/
+**/patch_coor/
+**/sampled_vis/
+*.svs
+*.tif
+*.tiff
+*.ndpi
+*.npy
+
+# Generated hypergraphs, checkpoints, logs, and visualizations
+PASG_Hyperedge/
+MGAS_Hyperedge/
+best_models/
+log/
+logs/
+vis_res/
+runs/
+wandb/
+*.pkl
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Local reports and temporary outputs
+*.log
+tmp/
+temp/

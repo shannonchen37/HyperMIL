@@ -1,0 +1,101 @@
+# =========================
+# 1) Input and output
+# =========================
+data_root: "svs_process/raw_svs/TCGA-STAD"      # Raw slide directory
+save_dir: "WSI_data/TCGA-STAD"                  # Output directory for training inputs
+exts: [".svs", ".tif", ".tiff", ".ndpi"]        # Supported slide extensions
+id_with_parent: true                            # Prefix slide IDs with parent directory names
+
+dirs:                                           # Subdirectories under save_dir
+  features: "patch_ft"                          # Patch feature directory
+  coordinates: "patch_coor"                     # Patch coordinate directory (level 0)
+  visualization: "sampled_vis"                  # Sampling visualization directory
+
+filenames:                                      # Output file suffixes
+  feature_suffix: "_fts.npy"
+  coords_suffix: "_coors.npy"
+  vis_suffix: "_sampled_patches.jpg"
+
+seed: 1337                                      # Global random seed
+
+# =========================
+# 2) Sampling
+# =========================
+sampling:
+  mode: "dense"                                 # "dense" or "random"
+  sample_level: 0                               # OpenSlide sampling level
+  patch_size: 256                               # Patch size at sample_level
+  dense_stride: 256                             # Grid stride for dense mode
+  num_sample: 2000                              # Number of patches for random mode
+  seed: 1337                                    # Random seed for random mode
+  max_trials: 100000                            # Maximum sampling attempts in random mode
+  use_bg_mask: true                             # Use the Otsu tissue mask to skip background
+  min_fg_ratio: 0.25                            # Minimum foreground ratio in a patch
+
+# =========================
+# 3) Otsu mask
+# =========================
+mask:
+  type: tissue
+  probe_coverage: false
+  bg_mask_level: 1                              # Lower resolution level for mask generation
+  kernel: 3                                     # Morphology kernel size
+  open_iter: 0
+  close_iter: 1
+  min_area: 50                                  # Minimum connected-component area
+  keep_largest: false
+  invert: false
+  fallback_max_edge: 4096
+  gaussian_ksize: 0
+  preview: true                                 # Save a tissue-mask preview image
+
+# =========================
+# 4) Visualization
+# =========================
+visualization:
+  enable: true                                  # Save patch overlay images
+  downsample: 32                                # Downsample factor for thumbnails
+  outline_rgb: [255, 0, 0]
+  outline_width: 1
+  jpeg_quality: 90
+
+# =========================
+# 5) Feature extractor
+# =========================
+model:
+  device: "auto"                                # "auto", "cuda", or "cpu"
+  backbone: "resnet34"
+  pooling: true                                 # Use global average pooling
+  pretrained: true
+
+  transform:
+    resize: 224
+    mean: [0.485, 0.456, 0.406]
+    std:  [0.229, 0.224, 0.225]
+
+  loader:
+    batch_size: 128
+    num_workers: 2
+    pin_memory: true
+    persistent_workers: false
+
+# =========================
+# 6) Runtime
+# =========================
+runtime:
+  cpu_workers: 5                                # Number of CPU sampling workers
+  gpu_workers: 1                                # Number of GPU feature threads
+  queue_maxsize: 8                              # Sampling-to-feature queue length
+  gpu_ids: []                                   # Optional GPU IDs; can also use HYPERMIL_GPU_IDS
+  log_every: 50
+  target_files: []                              # Optional filename whitelist; empty means process all
+
+# =========================
+# 7) Patch export
+# =========================
+export:
+  wsi_id: 2102347
+  indices: "0-199"
+  fmt: jpg
+  subdir: patches_200
+  max_count: 0
