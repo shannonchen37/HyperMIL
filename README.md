@@ -59,8 +59,6 @@ WSI_data/TCGA-STAD/clinical.tsv
 WSI_data/TCGA-STAD/splits_seed42/
 ```
 
-See `WSI_data/README.md` for the required clinical fields and included TCGA cohorts. Do not commit raw slides, patch features, generated hypergraphs, checkpoints, or local logs.
-
 Edit `svs_process/preprocess_config.yaml` before preprocessing:
 
 ```yaml
