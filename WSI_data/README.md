@@ -1,22 +1,22 @@
 # WSI Data
 
-Dataset files are intentionally not included in this repository.
+This directory contains TCGA-derived clinical tables and reference split files for the cohorts used by HyperMIL.
 
-Create one directory per TCGA cohort, for example:
+Included cohorts:
 
 ```text
 WSI_data/
 |-- TCGA-STAD/
 |   |-- clinical.tsv
 |   |-- splits_seed42/
-|   |-- patch_ft/
-|   `-- patch_coor/
 |-- TCGA-THCA/
 |-- TCGA-CHOL/
 `-- TCGA-LIHC/
 ```
 
-`clinical.tsv` should be prepared locally from the corresponding TCGA cohort metadata. The training code uses the following fields:
+The original data source is The Cancer Genome Atlas (TCGA), accessed through the Genomic Data Commons (GDC). Raw whole-slide images are not included in this repository and should be downloaded separately from TCGA/GDC according to the applicable data-use policy.
+
+Each `clinical.tsv` file is prepared from the corresponding TCGA cohort metadata. The training code uses the following fields:
 
 - `cases.submitter_id`
 - `demographic.vital_status`
@@ -24,4 +24,4 @@ WSI_data/
 - `diagnoses.days_to_last_follow_up`
 - `diagnoses.ajcc_pathologic_stage`
 
-Raw slides, clinical tables, split lists, extracted patch features, and generated hypergraphs should remain local unless your data-use policy explicitly permits redistribution.
+The `splits_seed42/` directories provide reference five-fold sample lists. The local `summary.txt` files are intentionally excluded from version control.

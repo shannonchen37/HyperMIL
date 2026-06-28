@@ -30,10 +30,14 @@ HyperMIL/
 |   |-- preprocess_wsi.py
 |   `-- run_preprocess.sh
 `-- WSI_data/
-    `-- README.md
+    |-- README.md
+    |-- TCGA-STAD/
+    |-- TCGA-THCA/
+    |-- TCGA-CHOL/
+    `-- TCGA-LIHC/
 ```
 
-Dataset files are intentionally not included in this repository. Prepare TCGA clinical tables, split files, raw WSIs, extracted patch features, and generated hypergraphs locally according to your data-use policy.
+The clinical tables and split files under `WSI_data/` are derived from The Cancer Genome Atlas (TCGA) cohorts. Raw WSI files are not redistributed in this repository and should be downloaded from the TCGA/GDC portal according to the applicable data-use policy.
 
 ## Environment
 
@@ -55,7 +59,7 @@ WSI_data/TCGA-STAD/clinical.tsv
 WSI_data/TCGA-STAD/splits_seed42/
 ```
 
-See `WSI_data/README.md` for the required clinical fields. Do not commit raw slides, clinical tables, split lists, patch features, or generated hypergraphs unless redistribution is explicitly permitted.
+See `WSI_data/README.md` for the required clinical fields and included TCGA cohorts. Do not commit raw slides, patch features, generated hypergraphs, checkpoints, or local logs.
 
 Edit `svs_process/preprocess_config.yaml` before preprocessing:
 

@@ -28,9 +28,8 @@ env/
 *.p12
 *.pfx
 
-# Dataset files are not released with the code.
-WSI_data/*
-!WSI_data/README.md
+# Dataset summaries generated locally
+WSI_data/*/splits_seed42/summary.txt
 
 # Raw WSI files and preprocessing outputs
 svs_process/raw_svs/
