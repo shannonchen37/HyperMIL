@@ -1,22 +1,80 @@
 # HyperMIL
 
-**Adaptive spatial–semantic hypergraph multiple instance learning for survival prediction from whole-slide histopathology.**
+![HyperMIL pipeline: preprocessing, MGAS structural hypergraphs, PASG semantic hypergraphs, dual-branch HGNNs, adaptive fusion, and patient-level survival prediction](assets/pipeline.png)
 
-[Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md) · [Evaluation protocol](docs/protocol.md)
+## HyperMIL: Adaptive Spatial–Semantic Hypergraph MIL for Survival Prediction from Whole-Slide Histopathology
 
-HyperMIL models complementary spatial and semantic relationships among histology patches using two hypergraph branches. The branches combine multi-granularity structural regions and semantic patch groups, followed by attention pooling and adaptive fusion to predict patient-level survival risk.
+**Shenrong Chen, Xiangmin Han, Chenggang Yan, Yuhan Gao, and Zongpeng Li**
 
-This repository provides HyperMIL, 13 baselines, and six ablation variants in a shared training and evaluation framework. Methods are selected through YAML configurations. Public patient-level five-fold splits and pretrained models support reproduction on TCGA-STAD, TCGA-THCA, TCGA-CHOL, and TCGA-LIHC.
+[**Read the full paper (PDF)**](docs/HyperMIL.pdf) · [Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md)
 
-## Results
+## Overview
 
-Patient-level Harrell C-index, reported as **mean ± sample standard deviation** over five folds. Macro is the mean of the four unrounded cohort means.
+Prognostic information in whole-slide histopathology can depend on both spatial tissue organization and similar morphological patterns in distant regions. **HyperMIL** represents these complementary relationships through structural and semantic hypergraphs, allowing a patch to participate in multiple tissue contexts.
+
+The framework has three main components:
+
+- **Multi-Granularity Adaptive Segmentation (MGAS):** recursively partitions a spatial–feature graph and retains both parent and child regions as overlapping structural hyperedges, preserving coarse and fine tissue contexts.
+- **Posterior-Guided Semantic Grouping (PASG):** discovers slide-specific Gaussian-mixture prototypes and connects each patch to its two most similar prototypes through temperature-scaled cosine affinities, forming sparse, soft semantic incidence across spatially separated regions.
+- **Dual-branch learning and adaptive fusion:** independent HGNNs and gated-attention pooling encode the two views. A learned scalar gate fuses the WSI representations, which are averaged within each patient before linear risk prediction with a Cox–Efron objective.
+
+The pipeline starts from frozen **512-dimensional ResNet-34 patch features** and patch coordinates. Hypergraph construction is slide-local and label-independent. Here, semantic groups describe feature-space organization rather than validated tissue phenotypes.
+
+## Experiments and results
+
+The study includes **1,291 patients and 1,344 diagnostic WSIs** from four TCGA cohorts, with overall survival as the endpoint. All slides belonging to a patient remain in the same fold.
+
+| Cohort | Patients | WSIs | Observed events |
+| --- | --- | --- | --- |
+| TCGA-STAD | 387 | 413 | 163 |
+| TCGA-THCA | 505 | 518 | 16 |
+| TCGA-CHOL | 39 | 39 | 19 |
+| TCGA-LIHC | 360 | 374 | 128 |
+
+### Main comparison
+
+Patient-level Harrell C-index is reported as **mean ± sample standard deviation** over five folds. Macro is the mean of the four unrounded cohort means. Bold denotes the highest mean in each column.
 
 | Method | STAD | THCA | CHOL | LIHC | Macro |
-| --- | --- | --- | --- | --- | --- |
-| HyperMIL | 0.6200 ± 0.0257 | 0.9310 ± 0.0254 | 0.7371 ± 0.1202 | 0.7473 ± 0.0629 | **0.7589** |
+|---|---|---|---|---|---|
+| MeanPool | 0.5630 ± 0.0349 | 0.8726 ± 0.0263 | 0.6597 ± 0.1806 | 0.7164 ± 0.0591 | 0.7029 |
+| ABMIL | 0.5759 ± 0.0632 | 0.8563 ± 0.0565 | 0.6555 ± 0.2126 | 0.7146 ± 0.0762 | 0.7006 |
+| DSMIL | 0.4965 ± 0.0605 | 0.8296 ± 0.0559 | 0.6557 ± 0.2393 | 0.6932 ± 0.0833 | 0.6688 |
+| ACMIL | 0.5703 ± 0.0621 | 0.8341 ± 0.0657 | 0.7087 ± 0.1855 | 0.7024 ± 0.0702 | 0.7039 |
+| DTFD-MIL | 0.5639 ± 0.0581 | 0.8522 ± 0.0719 | 0.7275 ± 0.1376 | 0.7028 ± 0.0833 | 0.7116 |
+| TransMIL | 0.6086 ± 0.0300 | 0.8848 ± 0.0512 | 0.6667 ± 0.1687 | 0.7131 ± 0.0774 | 0.7183 |
+| AttriMIL | 0.5413 ± 0.0377 | 0.8101 ± 0.0639 | 0.6983 ± 0.2791 | 0.7004 ± 0.0701 | 0.6875 |
+| DualGCN-MIL | 0.5693 ± 0.0595 | 0.8844 ± 0.0432 | 0.6212 ± 0.1611 | 0.7217 ± 0.0638 | 0.6991 |
+| PatchGCN | 0.5867 ± 0.0565 | 0.8974 ± 0.0196 | 0.6992 ± 0.2091 | 0.7216 ± 0.0694 | 0.7262 |
+| Spatial-KMeans-GroupPool | 0.5558 ± 0.0366 | 0.8698 ± 0.0278 | 0.6597 ± 0.1806 | 0.7166 ± 0.0612 | 0.7005 |
+| Semantic-KMeans-GroupPool | 0.5589 ± 0.0246 | 0.8628 ± 0.0239 | 0.6735 ± 0.2030 | 0.7152 ± 0.0594 | 0.7026 |
+| IIHGC | 0.5624 ± 0.0364 | 0.8404 ± 0.0467 | **0.7471 ± 0.0738** | 0.7120 ± 0.0841 | 0.7154 |
+| Hyper-AdaC | 0.5663 ± 0.0304 | 0.7946 ± 0.1256 | 0.7315 ± 0.1101 | 0.6214 ± 0.0899 | 0.6784 |
+| **HyperMIL (Ours)** | **0.6200 ± 0.0257** | **0.9310 ± 0.0254** | 0.7371 ± 0.1202 | **0.7473 ± 0.0629** | **0.7589** |
 
-See the complete [method comparison (Table III)](results/table_iii.md) and [ablation study (Table IV)](results/table_iv.md). Fresh inference from all **400 released model files** reproduced all **105 table cells** at the reported four-decimal precision. See the [verification report](docs/release_verification.json).
+HyperMIL obtains the highest observed Macro of **0.7589**, with the highest mean on STAD, THCA, and LIHC and the second-highest mean on CHOL. These are point-estimate rankings; the paper reports paired bootstrap uncertainty and discusses checkpoint-selection and external-validation limitations.
+
+AttriMIL omits its classification-specific rank constraint for survival prediction. DualGCN-MIL is a paper-guided reimplementation.
+
+### Ablation study
+
+The six variants test the structural branch, semantic branch, structural hierarchy, semantic assignments, adaptive fusion, and hypergraph propagation. The full pipeline has higher observed means than every variant on all four cohorts.
+
+| Method | STAD | THCA | CHOL | LIHC | Macro |
+|---|---|---|---|---|---|
+| A1: Structure-only | 0.5738 ± 0.0526 | 0.8594 ± 0.0425 | 0.6899 ± 0.1835 | 0.7043 ± 0.0832 | 0.7068 |
+| A2: Semantic-only | 0.5716 ± 0.0365 | 0.8596 ± 0.0554 | 0.6926 ± 0.2143 | 0.6953 ± 0.0602 | 0.7048 |
+| A3: Leaf-only | 0.5751 ± 0.0568 | 0.8694 ± 0.0311 | 0.7056 ± 0.1666 | 0.7055 ± 0.0496 | 0.7139 |
+| A4: Hard semantic | 0.5809 ± 0.0532 | 0.8760 ± 0.0314 | 0.6544 ± 0.1236 | 0.7214 ± 0.0572 | 0.7082 |
+| A5: Fixed fusion | 0.5806 ± 0.0437 | 0.8711 ± 0.0290 | 0.6910 ± 0.1436 | 0.7138 ± 0.0200 | 0.7141 |
+| A6: Incidence-based GroupPool | 0.5912 ± 0.0582 | 0.8778 ± 0.0307 | 0.6872 ± 0.1628 | 0.7303 ± 0.0703 | 0.7216 |
+| **A0: Full pipeline** | 0.6200 ± 0.0257 | 0.9310 ± 0.0254 | 0.7371 ± 0.1202 | 0.7473 ± 0.0629 | 0.7589 |
+
+The [full paper](docs/HyperMIL.pdf) includes the method formulation, Kaplan–Meier analyses, paired comparisons, and discussion. The [evaluation protocol](docs/protocol.md) describes the released inference pipelines and historical checkpoint selection.
+
+## Code and pretrained models
+
+This release provides HyperMIL, **13 baselines**, and **six ablation variants** through a shared YAML-configured framework. Fresh inference from all **400 model files** reproduced all **105 cells** in Tables III and IV at the reported four-decimal precision. See the [verification report](docs/release_verification.json).
 
 ## Quick start
 
@@ -149,6 +207,20 @@ manifests/      Frozen feature manifest
 checkpoints/    Model manifest; downloaded .pt files are installed here
 results/        Paper tables, comparison summaries, and evaluation outputs
 docs/           Evaluation protocol, distribution notes, and verification report
+```
+
+
+## Citation
+
+If you use this work, please cite the accompanying manuscript:
+
+```bibtex
+@misc{chen_hypermil,
+  title = {HyperMIL: Adaptive Spatial--Semantic Hypergraph MIL for Survival Prediction from Whole-Slide Histopathology},
+  author = {Chen, Shenrong and Han, Xiangmin and Yan, Chenggang and Gao, Yuhan and Li, Zongpeng},
+  howpublished = {Manuscript},
+  url = {https://github.com/shannonchen37/HyperMIL/blob/main/docs/HyperMIL.pdf}
+}
 ```
 
 ## License

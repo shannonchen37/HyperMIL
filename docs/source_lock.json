@@ -1,7 +1,7 @@
 {
   ".gitattributes": "2cc3f9fa72ea2419a1f2e9c80f8a59f2c329280ba5b3128f1236fa4fbfa599bf",
   ".gitignore": "e4f4c788533b6d95541e1d644c19777fa03fd7d00ab40ff252414c362f462136",
-  "README.md": "5c372cf12b6926235e4c667e4ca82478004d3500222da96b485548293aca7780",
+  "README.md": "bc8f6fd5ef825f2a1e3bf5e161aa17b81a7087cf62c20e90ff4d9a2f51a5e33d",
   "checkpoints/manifest.csv": "2a42fa4f399c57f2afa3d3266c92a05a31b5d599b113062e9432972036c429c6",
   "configs/ablation_a1.yaml": "87cfb8513a4dcc687ce55b2bbd4aaeae122aa98ed8587f44a9203d67964273b5",
   "configs/ablation_a2.yaml": "6bca88fcb1070c101ba705ddcec5c2f48afea437ebedd8876fad82c5b7551493",
@@ -69,5 +69,7 @@
   "scripts/train.py": "13d97a70d6afcaafc0f49dd314d3879968d212e6c0585611a889c31adbec1c5e",
   "scripts/verify_release.py": "fd3c9067c3ce1f45f6709141c0969859be8e4b550b87cd98560cfc13510a4076",
   "splits/patch_indices.csv": "cbc67fae57e70e8e839208bd79f49e04d508250963742b3e8f508a5511608d59",
-  "splits/patient_folds.csv": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab"
+  "splits/patient_folds.csv": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+  "assets/pipeline.png": "4f5ddc6a91a41124558fb612d490f66367c2b01c4336aa434ca031e38cd4b665",
+  "docs/HyperMIL.pdf": "db2a2c6f0e8efdc0c8d77bacdd2c28d03393b98a34fe859b6fdc098c1d39c9b6"
 }
