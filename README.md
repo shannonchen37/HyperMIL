@@ -98,19 +98,17 @@ Each method/cohort/fold has one self-contained `.pt` file, such as `hypermil_sta
 
 ### 3. Download data
 
-The frozen features, aligned coordinates, and graph/group inputs are hosted on [Hugging Face Datasets](https://huggingface.co/datasets/shannonhill/HyperMIL-data). The download script installs the matching inputs directly into `data/`:
+Download the frozen **512-D patch features**, aligned coordinates, and graph/group files from [Hugging Face Datasets](https://huggingface.co/datasets/shannonhill/HyperMIL-data):
 
 ```bash
 python scripts/download_data.py
-# Or download only the STAD cohort:
+# Download only one cohort:
 python scripts/download_data.py --cohort STAD
 ```
 
-**Data availability:** the downloader activates after the complete dataset has been uploaded and checked. If the initial upload is still in progress, it reports this clearly; retry the same command after publication. No YAML edits or Hugging Face login are required.
+The dataset contains **12,096 files**, totaling **142.87 GB**. Downloads can be resumed by rerunning the same command. Downloading one cohort provides the inputs for all methods on that cohort.
 
-The complete dataset contains **12,096 files**, totaling **142.87 GB (133.05 GiB)**. The downloader supports restarting after interruption and preserves the directory structure. Downloading one cohort installs the inputs for all methods on that cohort. Model weights are downloaded separately in step 2.
-
-All YAML files are included in `git clone`. The supplied [configs/paths.yaml](configs/paths.yaml) uses paths relative to the code repository root; no manual edits are needed with the downloaded layout:
+The script saves the data under `data/`, matching the relative paths in [configs/paths.yaml](configs/paths.yaml). No manual path changes or Hugging Face login are required.
 
 ```text
 HyperMIL/
@@ -118,15 +116,13 @@ HyperMIL/
   data/
     WSI_data/
       TCGA-STAD/        # also TCGA-THCA, TCGA-CHOL, TCGA-LIHC
-        patch_ft/       # frozen 512-D feature arrays
-        patch_coor/     # aligned patch coordinates
-    hypergraphs/        # HyperMIL spatial and semantic incidence
-    patchgcn_graphs/    # compact PatchGCN connectivity
-    KNN/                # DualGCN spatial and feature neighbors
-    kmeans_groups/      # Spatial/Semantic-KMeans-GroupPool inputs
+        patch_ft/       # patch feature files
+        patch_coor/     # patch coordinate files
+    hypergraphs/        # HyperMIL graph files
+    patchgcn_graphs/     # PatchGCN graph files
+    KNN/                # DualGCN-MIL graph files
+    kmeans_groups/      # GroupPool group files
 ```
-
-[configs/dataset.yaml](configs/dataset.yaml) selects the public dataset. Its completed-release marker resolves to an immutable dataset commit matching this code release; all data files are downloaded from that fixed commit, without requiring a Hugging Face account. See [data and model distribution](docs/distribution.md) for the input layout and storage requirements.
 
 ### 4. Evaluate
 
