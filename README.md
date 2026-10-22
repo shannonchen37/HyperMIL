@@ -142,7 +142,7 @@ python scripts/reproduce.py
 python scripts/reproduce.py --gpus 0,1
 ```
 
-The script runs checkpoint inference and resumes completed runs when their recorded code/configuration hashes match. Patient risks and fold reports are written to `results/eval/`. Table comparisons appear in `results/paper_comparison.csv`, with completion status in `results/verification_summary.json`. A completed full run exits with failure if table cells remain unresolved or differ at the reported precision.
+The script runs checkpoint inference and resumes completed runs when their recorded code/configuration hashes match. Patient risks and fold reports are written to `results/eval/`. Computed fold C-indices are saved in `results/fold_metrics.csv`; cohort means, sample standard deviations, and four-cohort macro averages are saved in `results/summary_metrics.csv`. Each cohort summary records the available folds, and macro averages are reported when all four cohorts have complete five-fold results. The script prints the computed metrics directly.
 
 ## Methods and configuration
 

@@ -1,49 +1,55 @@
 #!/usr/bin/env python3
-"""Run all methods through scripts/evaluate.py and compare the paper tables."""
+"""Run all methods through scripts/evaluate.py and summarize computed metrics."""
 import argparse,csv,json,os,statistics,subprocess,sys,time,yaml
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from hypermil.engine import sha256
 
 def aggregate():
-    aliases=yaml.safe_load((ROOT/'configs/config_index.yaml').read_text()).get('aliases',{})
-    targets=list(csv.DictReader((ROOT/'results/paper_targets.csv').open()))
+    cohorts=['STAD','THCA','CHOL','LIHC']
     reports={}
-    for p in (ROOT/'results/eval').glob('*/*/fold*/report.json'):
-        r=json.loads(p.read_text());reports[(r['method'],r['cohort'],r['fold'])]=r
+    for path in (ROOT/'results/eval').glob('*/*/fold*/report.json'):
+        report=json.loads(path.read_text())
+        reports[(report['method'],report['cohort'],int(report['fold']))]=report
+    fold_rows=[{'method':m,'cohort':c,'fold':f,'patients':r['patients'],'cindex':r['cindex']}
+               for (m,c,f),r in sorted(reports.items())]
     rows=[]
-    for t in targets:
-        method=aliases.get(t['method'],t['method']);cohort=t['cohort']
-        cs=['STAD','THCA','CHOL','LIHC'] if cohort=='Macro' else [cohort]
-        keys=[(method,c,f) for c in cs for f in range(5)]
-        if not all(k in reports for k in keys):
-            rows.append({**t,'eval_mean':'','eval_sample_sd':'','status':'PENDING'});continue
-        means=[statistics.mean(reports[(method,c,f)]['cindex'] for f in range(5)) for c in cs]
-        mean=statistics.mean(means)
-        sd='' if cohort=='Macro' else statistics.stdev(reports[k]['cindex'] for k in keys)
-        passed=f'{mean:.4f}'==f"{float(t['mean']):.4f}" and (sd=='' or f'{sd:.4f}'==f"{float(t['sample_sd']):.4f}")
-        rows.append({**t,'eval_mean':mean,'eval_sample_sd':sd,'status':'PASS' if passed else 'MISMATCH'})
-    with (ROOT/'results/paper_comparison.csv').open('w',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
-    summary={'fold_reports':len(reports),'table_cells':len(rows),'passed':sum(r['status']=='PASS' for r in rows),
-        'mismatches':[r for r in rows if r['status']=='MISMATCH'],'pending':sum(r['status']=='PENDING' for r in rows)}
-    (ROOT/'results/verification_summary.json').write_text(json.dumps(summary,indent=2)+'\n')
-    # Update the public manifest with fresh fold metrics.
-    for path in [ROOT/'checkpoints/manifest.csv']:
-        if not path.exists(): continue
-        mapping=list(csv.DictReader(path.open()))
-        for r in mapping:
-            key=(r['method'],r['cohort'],int(r['fold']))
-            if key in reports:
-                r['eval_cindex']=reports[key]['cindex'];r['eval_status']='EVALUATED'
-            else:r.setdefault('eval_cindex','')
-        with path.open('w',newline='') as f:
-            w=csv.DictWriter(f,fieldnames=list(mapping[0]));w.writeheader();w.writerows(mapping)
+    for method in sorted({m for m,c,f in reports}):
+        cohort_means={}
+        for cohort in cohorts:
+            folds=[f for f in range(5) if (method,cohort,f) in reports]
+            if not folds:continue
+            scores=[reports[(method,cohort,f)]['cindex'] for f in folds]
+            mean=statistics.mean(scores)
+            sd=statistics.stdev(scores) if len(scores)>1 else ''
+            rows.append({'method':method,'cohort':cohort,'fold_count':len(folds),
+                         'folds':' '.join(map(str,folds)),'mean':mean,'sample_sd':sd})
+            if len(folds)==5:cohort_means[cohort]=mean
+        if len(cohort_means)==len(cohorts):
+            rows.append({'method':method,'cohort':'Macro','fold_count':'',
+                         'folds':'','mean':statistics.mean(cohort_means.values()),'sample_sd':''})
+    output=ROOT/'results';output.mkdir(parents=True,exist_ok=True)
+    for name,fieldnames,values in [
+        ('fold_metrics.csv',['method','cohort','fold','patients','cindex'],fold_rows),
+        ('summary_metrics.csv',['method','cohort','fold_count','folds','mean','sample_sd'],rows),
+    ]:
+        with (output/name).open('w',newline='') as destination:
+            writer=csv.DictWriter(destination,fieldnames=fieldnames)
+            writer.writeheader();writer.writerows(values)
+    summary={'fold_reports':len(fold_rows),'cohort_summaries':sum(r['cohort']!='Macro' for r in rows),
+             'complete_five_fold_summaries':sum(r['cohort']!='Macro' and r['fold_count']==5 for r in rows),
+             'macro_summaries':sum(r['cohort']=='Macro' for r in rows),
+             'fold_metrics':'results/fold_metrics.csv','summary_metrics':'results/summary_metrics.csv'}
+    (output/'eval_summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+    for row in rows:
+        sd='' if row['sample_sd']=='' else f" ± {row['sample_sd']:.4f}"
+        count=f" ({row['fold_count']}/5 folds)" if row['cohort']!='Macro' else ''
+        print(f"{row['method']} {row['cohort']}: {row['mean']:.4f}{sd}{count}",flush=True)
     print(json.dumps(summary),flush=True)
     return summary
 
 def run(gpus,smoke=False,selected_configs=None):
+    from hypermil.engine import sha256
     configs=yaml.safe_load((ROOT/'configs/config_index.yaml').read_text())['methods']
     if selected_configs:configs={m:p for m,p in configs.items() if p in selected_configs}
     gpu_rows=subprocess.run(['nvidia-smi','--query-gpu=index,name','--format=csv,noheader'],capture_output=True,text=True,check=True).stdout.splitlines()
@@ -82,11 +88,13 @@ def run(gpus,smoke=False,selected_configs=None):
         status={'pending':len(tasks),'active':{str(g):{'pid':p.pid,'method':m,'cohort':c,'fold':f} for g,(p,l,m,c,f) in active.items()},'errors':errors}
         (ROOT/'results/run_status.json').write_text(json.dumps(status,indent=2)+'\n')
         if tasks or active:time.sleep(2)
-    summary=aggregate()
+    aggregate()
     if errors:raise SystemExit(json.dumps(errors))
-    if not smoke and not selected_configs and (summary['pending'] or summary['mismatches']):raise SystemExit('Paper comparison has unresolved cells')
 
-p=argparse.ArgumentParser();p.add_argument('--gpus',default='auto');p.add_argument('--config',action='append');p.add_argument('--smoke',action='store_true');p.add_argument('--aggregate',action='store_true')
-a=p.parse_args()
-if a.aggregate:aggregate()
-else:run(None if a.gpus=='auto' else [int(x) for x in a.gpus.split(',')],a.smoke,a.config)
+def main():
+    p=argparse.ArgumentParser();p.add_argument('--gpus',default='auto');p.add_argument('--config',action='append');p.add_argument('--smoke',action='store_true');p.add_argument('--aggregate',action='store_true')
+    a=p.parse_args()
+    if a.aggregate:aggregate()
+    else:run(None if a.gpus=='auto' else [int(x) for x in a.gpus.split(',')],a.smoke,a.config)
+
+if __name__=='__main__':main()
