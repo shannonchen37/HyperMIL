@@ -1,9 +1,13 @@
 {
   "validated_source_sha256": "df797aeac9a1c9a9f4319cae313cb3a499c8eeb816742f16eeb70daddb211821",
-  "inference_code_unchanged": true,
+  "inference_code_unchanged": false,
   "publication_changes": [
-    "README download instructions and preserved license note",
-    "scripts/download_models.py",
-    ".gitattributes preserves exact CSV bytes"
-  ]
+    "README presentation and publication placeholders",
+    "Uppercase/lowercase cohort arguments",
+    "Tracked repository-relative data paths and portable feature manifest",
+    "Shared loader resolves configured data roots from repository root",
+    "Verification summary explicitly covers all five folds with a HyperMIL example",
+    "Paper PDF and protocol page removed; checkpoint details retained in training documentation"
+  ],
+  "inference_algorithms_unchanged": true
 }

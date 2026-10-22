@@ -29,8 +29,8 @@ def aggregate():
     summary={'fold_reports':len(reports),'table_cells':len(rows),'passed':sum(r['status']=='PASS' for r in rows),
         'mismatches':[r for r in rows if r['status']=='MISMATCH'],'pending':sum(r['status']=='PENDING' for r in rows)}
     (ROOT/'results/verification_summary.json').write_text(json.dumps(summary,indent=2)+'\n')
-    # Attach fresh metrics to both public and private mapping without changing weights.
-    for path in [ROOT/'checkpoints/manifest.csv',ROOT.parent/'HyperMIL_release_audit_20261022/checkpoint_source_mapping.csv']:
+    # Update the public manifest with fresh fold metrics.
+    for path in [ROOT/'checkpoints/manifest.csv']:
         if not path.exists(): continue
         mapping=list(csv.DictReader(path.open()))
         for r in mapping:

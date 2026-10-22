@@ -1,4 +1,4 @@
-# Evaluation protocol
+# Training and checkpoint details
 
 All interfaces read the same frozen feature manifest and patient-level five-fold split. `max_patches` controls input selection in the common loader. IIHGC and Hyper-AdaC select the same fixed indices (at most 2,000 per slide); other interfaces receive every patch. Their method-specific graph or pooling operations remain inside the model interfaces.
 

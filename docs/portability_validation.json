@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "scope": "Relative-path portability regression; original 400-model verification is separate",
+  "method": "HyperMIL",
+  "cohort": "STAD",
+  "fold_ids": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "fresh_evaluated_folds": 5,
+  "launched_outside_repository": true,
+  "default_relative_paths_yaml": "configs/paths.yaml",
+  "reference_result": "0.6200 \u00b1 0.0257",
+  "eval_mean": 0.6200236365978686,
+  "eval_sample_sd": 0.025706493419214195,
+  "fold_metrics": [
+    {
+      "fold": 0,
+      "cindex": 0.6133069828722003,
+      "matches_reference": true,
+      "max_absolute_patient_risk_difference": 0.0
+    },
+    {
+      "fold": 1,
+      "cindex": 0.6631369953673064,
+      "matches_reference": true,
+      "max_absolute_patient_risk_difference": 0.0
+    },
+    {
+      "fold": 2,
+      "cindex": 0.6004872107186358,
+      "matches_reference": true,
+      "max_absolute_patient_risk_difference": 0.0
+    },
+    {
+      "fold": 3,
+      "cindex": 0.6012104909213181,
+      "matches_reference": true,
+      "max_absolute_patient_risk_difference": 0.0
+    },
+    {
+      "fold": 4,
+      "cindex": 0.6219765031098825,
+      "matches_reference": true,
+      "max_absolute_patient_risk_difference": 0.0
+    }
+  ],
+  "validated_method_configurations": 20,
+  "feature_rows_unchanged_except_paths": 1344,
+  "patient_split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+  "data_loader_sha256": "b129f8446a8b7c83de6bdaf3892f279be6c1ee28fffa6586509389ecc460e8e6"
+}

@@ -6,12 +6,56 @@
   "passed_table_cells": 105,
   "issues": [],
   "per_fold_reference_differences": [],
-  "equivalent_runtime_only_config_snapshots": [
-    "IIHGC/STAD/fold0",
-    "IIHGC/STAD/fold1",
-    "IIHGC/STAD/fold2",
-    "IIHGC/STAD/fold3"
-  ],
   "total_checkpoint_bytes": 1162648496,
-  "largest_checkpoint_bytes": 32252510
+  "largest_checkpoint_bytes": 32252510,
+  "cross_validation": {
+    "unit": "patient",
+    "fold_count": 5,
+    "fold_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "cohorts": [
+      "STAD",
+      "THCA",
+      "CHOL",
+      "LIHC"
+    ],
+    "method_count": 20,
+    "all_method_cohort_pairs_have_five_folds": true
+  },
+  "example": {
+    "method": "HyperMIL",
+    "cohort": "STAD",
+    "fold_metrics": [
+      {
+        "fold": 0,
+        "cindex": 0.6133069828722003
+      },
+      {
+        "fold": 1,
+        "cindex": 0.6631369953673064
+      },
+      {
+        "fold": 2,
+        "cindex": 0.6004872107186358
+      },
+      {
+        "fold": 3,
+        "cindex": 0.6012104909213181
+      },
+      {
+        "fold": 4,
+        "cindex": 0.6219765031098825
+      }
+    ]
+  },
+  "runtime_configuration_notes": {
+    "equivalent_snapshot_count": 4
+  },
+  "evaluation_scope": "Initial complete released-checkpoint evaluation; subsequent relative-path validation is recorded separately.",
+  "relative_path_validation_report": "docs/portability_validation.json"
 }

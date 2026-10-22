@@ -28,11 +28,11 @@ def install_archive(archive,root):
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--cohort',default='all',choices=['all','stad','thca','chol','lihc'])
+    parser.add_argument('--cohort',default='ALL',type=str.upper,choices=['ALL','STAD','THCA','CHOL','LIHC'])
     parser.add_argument('--release',default='v1.0.0')
     parser.add_argument('--output-root',type=Path,default=ROOT)
     args=parser.parse_args()
-    cohorts=['stad','thca','chol','lihc'] if args.cohort=='all' else [args.cohort]
+    cohorts=['stad','thca','chol','lihc'] if args.cohort=='ALL' else [args.cohort.lower()]
     for cohort in cohorts:
         name=f'hypermil_weights_{cohort}.tar'
         url=f'{REPOSITORY}/releases/download/{args.release}/{name}'

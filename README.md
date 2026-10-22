@@ -1,12 +1,10 @@
-# HyperMIL
+# HyperMIL: Adaptive Spatial–Semantic Hypergraph MIL for Survival Prediction from Whole-Slide Histopathology
 
 ![HyperMIL pipeline: preprocessing, MGAS structural hypergraphs, PASG semantic hypergraphs, dual-branch HGNNs, adaptive fusion, and patient-level survival prediction](assets/pipeline.png)
 
-## HyperMIL: Adaptive Spatial–Semantic Hypergraph MIL for Survival Prediction from Whole-Slide Histopathology
-
 **Shenrong Chen, Xiangmin Han, Chenggang Yan, Yuhan Gao, and Zongpeng Li**
 
-[**Read the full paper (PDF)**](docs/HyperMIL.pdf) · [Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md)
+[Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md)
 
 ## Overview
 
@@ -54,8 +52,6 @@ Patient-level Harrell C-index is reported as **mean ± sample standard deviation
 
 HyperMIL obtains the highest observed Macro of **0.7589**, with the highest mean on STAD, THCA, and LIHC and the second-highest mean on CHOL. These are point-estimate rankings; the paper reports paired bootstrap uncertainty and discusses checkpoint-selection and external-validation limitations.
 
-AttriMIL omits its classification-specific rank constraint for survival prediction. DualGCN-MIL is a paper-guided reimplementation.
-
 ### Ablation study
 
 The six variants test the structural branch, semantic branch, structural hierarchy, semantic assignments, adaptive fusion, and hypergraph propagation. The full pipeline has higher observed means than every variant on all four cohorts.
@@ -70,11 +66,9 @@ The six variants test the structural branch, semantic branch, structural hierarc
 | A6: Incidence-based GroupPool | 0.5912 ± 0.0582 | 0.8778 ± 0.0307 | 0.6872 ± 0.1628 | 0.7303 ± 0.0703 | 0.7216 |
 | **A0: Full pipeline** | 0.6200 ± 0.0257 | 0.9310 ± 0.0254 | 0.7371 ± 0.1202 | 0.7473 ± 0.0629 | 0.7589 |
 
-The [full paper](docs/HyperMIL.pdf) includes the method formulation, Kaplan–Meier analyses, paired comparisons, and discussion. The [evaluation protocol](docs/protocol.md) describes the released inference pipelines and historical checkpoint selection.
-
 ## Code and pretrained models
 
-This release provides HyperMIL, **13 baselines**, and **six ablation variants** through a shared YAML-configured framework. Fresh inference from all **400 model files** reproduced all **105 cells** in Tables III and IV at the reported four-decimal precision. See the [verification report](docs/release_verification.json).
+This release provides HyperMIL, **13 baselines**, and **six ablation variants** through a shared YAML-configured framework. Fresh inference from all **400 model files** reproduced all **105 cells** in Tables III and IV at the reported four-decimal precision. The [verification report](docs/release_verification.json) covers all methods, four cohorts, and all five folds (`0–4`), with HyperMIL as the example.
 
 ## Quick start
 
@@ -95,32 +89,47 @@ The evaluated environment used PyTorch 2.6.0 with CUDA 11.8. Exact tested versio
 ```bash
 python scripts/download_models.py
 # Download only one cohort:
-python scripts/download_models.py --cohort stad
+python scripts/download_models.py --cohort STAD
 ```
 
-The [v1.0.0 release](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) provides four cohort archives, totaling approximately **1.08 GiB**. The script verifies SHA256 hashes and installs weights into `checkpoints/`. Available cohort options are `stad`, `thca`, `chol`, and `lihc`.
+The [v1.0.0 release](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) provides four cohort archives, totaling approximately **1.08 GiB**. The script installs weights into `checkpoints/`. Available cohort options are `STAD`, `THCA`, `CHOL`, and `LIHC` (lowercase input is also accepted).
 
-Each method/cohort/fold has one self-contained `.pt` file, such as `hypermil_stad_fold0.pt` or `ablation_a1_stad_fold0.pt`. Multi-member models retain all member weights and combination settings in that file; IIHGC retains both stages. File hashes and fold metrics are recorded in [checkpoints/manifest.csv](checkpoints/manifest.csv).
+Each method/cohort/fold has one self-contained `.pt` file, such as `hypermil_stad_fold0.pt` or `ablation_a1_stad_fold0.pt`. File hashes and fold metrics are recorded in [checkpoints/manifest.csv](checkpoints/manifest.csv).
 
-### 3. Configure data paths
+### 3. Prepare data
 
-Evaluation requires the frozen **512-D patch features**, aligned patch coordinates, and method-specific graph/group inputs. These data assets are separate from the model download; weights alone are insufficient to run evaluation.
+Evaluation requires the frozen **512-D patch features**, aligned patch coordinates, and method-specific graph/group inputs. **Feature and graph assets have not yet been uploaded**; downloading model weights alone is insufficient to run evaluation.
 
-```bash
-cp configs/paths.example.yaml configs/paths.local.yaml
-```
-
-Edit `configs/paths.local.yaml` to point to your data directories:
+All YAML files, including [configs/paths.yaml](configs/paths.yaml), are included in `git clone`. The default paths are relative to the repository root:
 
 ```yaml
-wsi_data: /path/to/WSI_data
-hypergraphs: /path/to/hypergraphs
-patchgcn: /path/to/patchgcn_graphs
-knn: /path/to/KNN
-kmeans: /path/to/kmeans_groups
+wsi_data: data/WSI_data
+hypergraphs: data/hypergraphs
+patchgcn: data/patchgcn_graphs
+knn: data/KNN
+kmeans: data/kmeans_groups
 ```
 
-Features and coordinates are loaded from `WSI_data/TCGA-{cohort}/patch_ft/` and `patch_coor/`, using filenames in [manifests/feature_manifest.csv](manifests/feature_manifest.csv). Preserve their patch order and feature representation. See [data and model distribution](docs/distribution.md) for storage requirements.
+Place the matching data assets in these directories, or link existing data directories to these locations. No YAML editing is needed with this layout, even when launching the scripts from another working directory.
+
+```text
+HyperMIL/
+  configs/paths.yaml
+  data/
+    WSI_data/
+      TCGA-STAD/
+        patch_ft/       # 512-D NumPy feature arrays
+        patch_coor/     # aligned NumPy patch coordinates
+      TCGA-THCA/        # same layout
+      TCGA-CHOL/
+      TCGA-LIHC/
+    hypergraphs/
+    patchgcn_graphs/
+    KNN/
+    kmeans_groups/
+```
+
+Filenames and patch ordering must match [manifests/feature_manifest.csv](manifests/feature_manifest.csv). See [data and model distribution](docs/distribution.md) for storage requirements.
 
 ### 4. Evaluate
 
@@ -146,33 +155,32 @@ The script runs checkpoint inference and resumes completed runs when their recor
 
 **All methods share the data loader, patient splits, evaluation engine, and metric implementation.** YAML files select the model interface, input settings, and method-specific parameters.
 
-IIHGC and Hyper-AdaC use a fixed 2,000-patch subset per WSI (following their original settings), while HyperMIL and other baselines use complete WSIs. All methods share the same code framework, patient splits, and evaluation protocol.
-
-The public [patient split file](splits/patient_folds.csv) is shared by every method. The [patch index file](splits/patch_indices.csv) fixes the subset identities, with at most 2,000 patches per WSI. Evaluation never generates replacement patient splits.
+The public [patient split file](splits/patient_folds.csv) is shared by every method. The [patch index file](splits/patch_indices.csv) fixes the patch subset identities. Evaluation never generates replacement patient splits.
 
 Switch methods by changing the configuration:
 
 ```bash
+python scripts/evaluate.py --config configs/hypermil.yaml --cohort STAD --fold 0
 python scripts/evaluate.py --config configs/abmil.yaml --cohort STAD --fold 0
-python scripts/evaluate.py --config configs/iihgc.yaml --cohort STAD --fold 0
 python scripts/evaluate.py --config configs/ablation_a1.yaml --cohort STAD --fold 0
 ```
 
-Example input settings from `configs/iihgc.yaml`:
+HyperMIL configuration in [configs/hypermil.yaml](configs/hypermil.yaml):
 
 ```yaml
-method: IIHGC
-interface: hypermil.interfaces:IIHGCInterface
+method: HyperMIL
+interface: hypermil.interfaces:PipelineInterface
+paths_file: configs/paths.yaml
 data:
   feature_manifest: manifests/feature_manifest.csv
   patient_folds: splits/patient_folds.csv
-  max_patches: 2000
-  patch_selection: splits/patch_indices.csv
+  max_patches: null
+  patch_selection: null
 model:
-  factory: hypermil.models.iihgc:InterModel
+  factory: hypermil.models.hypermil:make_hypermil
 ```
 
-This is an excerpt; use the complete supplied configuration to run a method. Full-WSI methods set `max_patches: null`. See [configs/config_index.yaml](configs/config_index.yaml) for all method-to-configuration mappings.
+See [configs/config_index.yaml](configs/config_index.yaml) for all method-to-configuration mappings.
 
 | Ablation | Variant | Configuration |
 | --- | --- | --- |
@@ -187,14 +195,12 @@ This is an excerpt; use the complete supplied configuration to run a method. Ful
 ## Training
 
 ```bash
-python scripts/train.py --config configs/abmil.yaml --cohort STAD --fold 0 --output runs/abmil_stad_fold0
+python scripts/train.py --config configs/hypermil.yaml --cohort STAD --fold 0 --output runs/hypermil_stad_fold0
 ```
 
 New runs use the shared trainer with the complete training-patient risk set, Cox loss with Efron correction, and inner-validation checkpoint selection. Model-specific stages are implemented through interfaces. Full-WSI training can require substantial GPU memory.
 
-The released checkpoints reproduce the archived paper results; the shared trainer supports new experiments. Historical checkpoints had fold-specific training and selection settings, including some outer-fold selection, so retraining is not guaranteed to reproduce the released results and these archived scores are not independent test estimates. HyperMIL's default new training run fits a single canonical member, while released models preserve the table-producing pipeline. Details are documented in the [evaluation protocol](docs/protocol.md).
-
-For exact numerical replication, IIHGC's reference GPU is an RTX 2080 Ti. Its graph construction can produce small floating-point differences on other GPU architectures; the reproduction scheduler uses the reference device when available.
+The experiments used NVIDIA GeForce RTX 3090 GPUs. See [training and checkpoint details](docs/training.md) for training settings and the released inference pipelines.
 
 ## Repository structure
 
@@ -206,22 +212,13 @@ splits/         Public patient folds and fixed patch indices
 manifests/      Frozen feature manifest
 checkpoints/    Model manifest; downloaded .pt files are installed here
 results/        Paper tables, comparison summaries, and evaluation outputs
-docs/           Evaluation protocol, distribution notes, and verification report
+docs/           Training details, distribution notes, and verification report
 ```
 
 
 ## Citation
 
-If you use this work, please cite the accompanying manuscript:
-
-```bibtex
-@misc{chen_hypermil,
-  title = {HyperMIL: Adaptive Spatial--Semantic Hypergraph MIL for Survival Prediction from Whole-Slide Histopathology},
-  author = {Chen, Shenrong and Han, Xiangmin and Yan, Chenggang and Gao, Yuhan and Li, Zongpeng},
-  howpublished = {Manuscript},
-  url = {https://github.com/shannonchen37/HyperMIL/blob/main/docs/HyperMIL.pdf}
-}
-```
+<!-- Add the published paper link and BibTeX citation after publication. -->
 
 ## License
 

@@ -28,7 +28,8 @@ class InputStore:
         from hypermil.config import resolve
         self.config = config
         self.data = config['data']
-        self.paths = yaml.safe_load(resolve(config['paths_file']).read_text())
+        self.paths = {key: resolve(value) for key, value in
+                      yaml.safe_load(resolve(config['paths_file']).read_text()).items() if value}
         self.indices = None
         if self.data['max_patches'] is not None:
             with resolve(self.data['patch_selection']).open(newline='') as f:
@@ -42,7 +43,7 @@ class InputStore:
             for r in csv.DictReader(f):
                 if r['cohort'] != cohort:
                     continue
-                ft, co = (Path(r['feature_path']), Path(r['coordinate_path']))
+                ft, co = (resolve(r['feature_path']), resolve(r['coordinate_path']))
                 if self.paths.get('wsi_data'):
                     base = Path(self.paths['wsi_data']) / f'TCGA-{cohort}'
                     ft = base / 'patch_ft' / ft.name

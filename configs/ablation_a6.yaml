@@ -1,7 +1,7 @@
 method: "A6"
 slug: "ablation_a6"
 interface: "hypermil.interfaces:HypergraphInterface"
-paths_file: "configs/paths.local.yaml"
+paths_file: "configs/paths.yaml"
 data:
   feature_manifest: "manifests/feature_manifest.csv"
   patient_folds: "splits/patient_folds.csv"

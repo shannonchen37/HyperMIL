@@ -7,57 +7,57 @@
     "MeanPool": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "ABMIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "DSMIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "ACMIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "DTFD-MIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "TransMIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "AttriMIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "DualGCN-MIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "PatchGCN": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "Spatial-KMeans-GroupPool": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "Semantic-KMeans-GroupPool": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "IIHGC": {
       "max_patches": 2000,
@@ -72,37 +72,37 @@
     "HyperMIL": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "A1": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "A2": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "A3": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "A4": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "A5": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     },
     "A6": {
       "max_patches": null,
       "shared_patient_splits": true,
-      "sample_patches": 12715
+      "sample_patches": 85355
     }
   }
 }

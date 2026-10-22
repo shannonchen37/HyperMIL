@@ -1,0 +1,5 @@
+wsi_data: data/WSI_data
+hypergraphs: data/hypergraphs
+patchgcn: data/patchgcn_graphs
+knn: data/KNN
+kmeans: data/kmeans_groups

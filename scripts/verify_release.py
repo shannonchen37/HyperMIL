@@ -8,7 +8,7 @@ sys.path.insert(0,str(ROOT))
 from hypermil.engine import sha256
 index=yaml.safe_load((ROOT/'configs/config_index.yaml').read_text())['methods']
 rows=list(csv.DictReader((ROOT/'checkpoints/manifest.csv').open()))
-issues=[];evaluated=0;fold_differences=[];runtime_only_snapshots=[]
+issues=[];evaluated=0;fold_differences=[];runtime_only_snapshots=[];coverage={};example=[]
 for r in rows:
     key=f"{r['method']}/{r['cohort']}/fold{r['fold']}"
     file=ROOT/'checkpoints'/r['filename']
@@ -16,6 +16,9 @@ for r in rows:
     path=ROOT/'results/eval'/r['method']/r['cohort']/f"fold{r['fold']}"/'report.json'
     if not path.exists():issues.append([key,'missing evaluation']);continue
     report=json.loads(path.read_text());evaluated+=1
+    coverage.setdefault((r['method'],r['cohort']),set()).add(int(report['fold']))
+    if r['method']=='HyperMIL' and r['cohort']=='STAD':
+        example.append({'fold':report['fold'],'cindex':report['cindex']})
     yaml_matches=report['config_sha256']==sha256(ROOT/index[r['method']])
     if not yaml_matches:
         snapshot=ROOT/'docs/config_snapshots'/f"{report['config_sha256']}.yaml"
@@ -37,11 +40,17 @@ for r in rows:
 comparison=list(csv.DictReader((ROOT/'results/paper_comparison.csv').open()))
 for r in comparison:
     if r['status']!='PASS':issues.append([f"Table {r['table']} {r['method']} {r['cohort']}",r['status']])
+cohorts=['STAD','THCA','CHOL','LIHC']
+complete=all(coverage.get((m,c),set())==set(range(5)) for m in index for c in cohorts)
+if not complete:issues.append(['cross_validation','incomplete five-fold coverage'])
 report={'status':'PASS' if not issues and len(rows)==400 and len(comparison)==105 else 'INCOMPLETE_OR_MISMATCH',
     'model_files':len(rows),'fresh_evaluated_folds':evaluated,'table_cells':len(comparison),
     'passed_table_cells':sum(r['status']=='PASS' for r in comparison),'issues':issues,
     'per_fold_reference_differences':fold_differences,
-    'equivalent_runtime_only_config_snapshots':runtime_only_snapshots,
+    'cross_validation':{'unit':'patient','fold_count':5,'fold_ids':list(range(5)),'cohorts':cohorts,
+        'method_count':len(index),'all_method_cohort_pairs_have_five_folds':complete},
+    'example':{'method':'HyperMIL','cohort':'STAD','fold_metrics':sorted(example,key=lambda r:r['fold'])},
+    'runtime_configuration_notes':{'equivalent_snapshot_count':len(runtime_only_snapshots)},
     'total_checkpoint_bytes':sum(int(r['bytes']) for r in rows),'largest_checkpoint_bytes':max(int(r['bytes']) for r in rows)}
 (ROOT/'docs/release_verification.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report),flush=True)
