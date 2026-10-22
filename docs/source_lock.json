@@ -1,7 +1,7 @@
 {
   ".gitattributes": "2cc3f9fa72ea2419a1f2e9c80f8a59f2c329280ba5b3128f1236fa4fbfa599bf",
   ".gitignore": "e4f4c788533b6d95541e1d644c19777fa03fd7d00ab40ff252414c362f462136",
-  "README.md": "6de909a8c08c1c5089ddccb8c7126f5786b76788d7ebb97d9349ec60aab8d1b5",
+  "README.md": "5c372cf12b6926235e4c667e4ca82478004d3500222da96b485548293aca7780",
   "checkpoints/manifest.csv": "2a42fa4f399c57f2afa3d3266c92a05a31b5d599b113062e9432972036c429c6",
   "configs/ablation_a1.yaml": "87cfb8513a4dcc687ce55b2bbd4aaeae122aa98ed8587f44a9203d67964273b5",
   "configs/ablation_a2.yaml": "6bca88fcb1070c101ba705ddcec5c2f48afea437ebedd8876fad82c5b7551493",
@@ -28,7 +28,7 @@
   "configs/transmil.yaml": "40a131ec0b45ce7cb95e120016136ad161cdf35c551e3fefd1edd15aedb0bb6f",
   "docs/config_snapshots/209c667c7440c7779237e0776311c7d3e51eed5580c47aea9ef426bbb968b200.yaml": "209c667c7440c7779237e0776311c7d3e51eed5580c47aea9ef426bbb968b200",
   "docs/config_validation.json": "1a57822a5c3a2ce1a56fcd7dafcaf1ac0f960a5e65b1c966626b83061598f3d4",
-  "docs/distribution.md": "a1714b9c1a7d1c6921bac1fd92818d70d7bd7acc8d5fe44f5742975101ea5be6",
+  "docs/distribution.md": "80b63fcd1c9badd11b27f9f7a36c56e62b196856978cb7d67cfc983ee3595594",
   "docs/protocol.md": "c40d579b3ff197cdab2af6de2b505dd5422dbaa719044ffe75cdaefce1ccf735",
   "docs/publication.json": "488fc00ff562bbe36ee9d9feac65a8f269a6d513b04d473c83b1afcf8d1535be",
   "docs/release_verification.json": "6b0868b301992e9904769fcb87ee91379027198035b7d1a6fde7de43d5578004",
