@@ -59,10 +59,21 @@ class PatchGCNInterface(ModelInterface):
     def patient_risk(self,p,index):
         zs=[]
         for s in p.slides:
-            graph=torch.load(Path(self.store.paths[self.params['graph_directory_key']])/f'TCGA-{self.cohort}'/f'{s.sample_id}.pt',map_location='cpu',weights_only=False)
+            base=Path(self.store.paths[self.params['graph_directory_key']])/f'TCGA-{self.cohort}'
             x,_=self.store.load(s,self.device)
-            assert torch.equal(graph.x,x.cpu()),f'PatchGCN feature mismatch {s.sample_id}'
-            zs.append(self.model.encode_slide(x,edge_index=graph.edge_index.to(self.device)))
+            if self.params.get('graph_format','pt')=='npz':
+                from hypermil.engine import sha256
+                with np.load(base/f'{s.sample_id}.npz',allow_pickle=False) as graph:
+                    assert int(graph['num_nodes'])==s.n_patches
+                    assert str(graph['feature_sha256'].item())==sha256(s.feature_path),f'PatchGCN feature mismatch {s.sample_id}'
+                    edge=torch.from_numpy(graph['edge_index'].copy())
+                assert edge.dtype==torch.int64 and edge.ndim==2 and edge.shape[0]==2
+                assert edge.numel()==0 or (int(edge.min())>=0 and int(edge.max())<s.n_patches)
+            else:
+                graph=torch.load(base/f'{s.sample_id}.pt',map_location='cpu',weights_only=False)
+                assert torch.equal(graph.x,x.cpu()),f'PatchGCN feature mismatch {s.sample_id}'
+                edge=graph.edge_index
+            zs.append(self.model.encode_slide(x,edge_index=edge.to(self.device)))
         return self.model.risk_head(torch.stack(zs).mean(0)).reshape(())
 
 class DualGCNInterface(ModelInterface):

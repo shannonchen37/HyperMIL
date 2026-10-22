@@ -6,10 +6,25 @@ Code, YAML configurations, patient/patch split files, manifests and compact eval
 
 GitHub permits up to 1,000 assets per release, each under 2 GiB; its documentation specifies no total release-size or bandwidth limit. These release assets do not consume Git LFS storage or download quotas. For this model set an external cloud drive is optional and can serve as a download mirror. A checkpoint archive is not a substitute for feature inputs.
 
-The shared manifest records 137,014,190,080 bytes of feature arrays (127.60 GiB) and 535,383,040 bytes of paired coordinates (0.50 GiB), before graph files and raw WSIs. These input assets belong in external storage or must be regenerated with the documented frozen extractor; they should not be committed to the Git repository. Model download storage and feature-data storage are separate decisions.
+## Evaluation inputs
 
-The feature and graph assets are not included in v1.0.0. To reproduce the verified numbers, mount the matching frozen inputs and place them under the relative directories in `configs/paths.yaml`. Replacing features with a different extractor or changing their patch order is not equivalent input data.
+The data release contains 12,096 `.npy`/`.npz` files for four cohorts, totaling 142,866,662,028 bytes (142.87 GB / 133.05 GiB). It is hosted separately in [shannonhill/HyperMIL-data](https://huggingface.co/datasets/shannonhill/HyperMIL-data); downloads activate once the complete-release marker has been published. The source repository does not contain the data files.
 
-For maintainers, `scripts/package_weights.py` creates cohort archives and checksum files outside the source tree; it does not upload them.
+| Input | Size (GiB) | Used by |
+| --- | ---: | --- |
+| Shared patch features | 127.604 | All methods |
+| Aligned coordinates | 0.499 | Shared input protocol and spatial methods |
+| Spatial/semantic hypergraphs | 0.814 | HyperMIL and its hypergraph variants |
+| Compact PatchGCN connectivity | 0.832 | PatchGCN |
+| Spatial/feature KNN graphs | 3.251 | DualGCN-MIL |
+| GroupPool inputs | 0.054 | Spatial/Semantic-KMeans-GroupPool |
 
-References: [GitHub large file limits](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github), [GitHub release asset limits](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+After publication, run `python scripts/download_data.py` to install all inputs, or append `--cohort STAD` for one cohort. The script reads the completed-release marker selected by `configs/dataset.yaml`, checks that it matches the code's manifest, and downloads from the immutable commit named in that marker. It writes only manifest-listed files below `data/`. Until the complete upload is verified, the marker is absent and the downloader exits with a clear publication-status message. An explicit immutable revision can also be set in YAML. Interrupted downloads can be resumed by re-running the same command. Downloading original files directly avoids requiring space for both an archive and its extracted contents. Allow additional disk headroom for model weights, runtime files, and evaluation outputs.
+
+The path keys in `configs/paths.yaml` resolve relative to the code repository root. The same loader and method interfaces use these files for training and evaluation. Patient folds and fixed patch selections remain tracked in GitHub. No raw WSIs or new preprocessing/build-graph source code are included in this data release.
+
+The compact PatchGCN interface reads connectivity from `.npz` and shared features from `WSI_data`; no duplicate node-feature tensors are shipped. This representation was evaluated on all four cohorts and all five folds, preserving every fold C-index and the reported table values. It does not change the model architecture or evaluation metric. Legacy `.pt` graph loading remains selectable through YAML.
+
+For maintainers, `scripts/package_weights.py` creates cohort model archives and checksum files outside the source tree; it does not upload them.
+
+References: [Hugging Face dataset downloads](https://huggingface.co/docs/hub/datasets-downloading), [GitHub large file limits](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github), [GitHub release asset limits](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).

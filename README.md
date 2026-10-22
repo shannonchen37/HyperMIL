@@ -96,40 +96,37 @@ The [v1.0.0 release](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0
 
 Each method/cohort/fold has one self-contained `.pt` file, such as `hypermil_stad_fold0.pt` or `ablation_a1_stad_fold0.pt`. File hashes and fold metrics are recorded in [checkpoints/manifest.csv](checkpoints/manifest.csv).
 
-### 3. Prepare data
+### 3. Download data
 
-Evaluation requires the frozen **512-D patch features**, aligned patch coordinates, and method-specific graph/group inputs. **Feature and graph assets have not yet been uploaded**; downloading model weights alone is insufficient to run evaluation.
+The frozen features, aligned coordinates, and graph/group inputs are hosted on [Hugging Face Datasets](https://huggingface.co/datasets/shannonhill/HyperMIL-data). The download script installs the matching inputs directly into `data/`:
 
-All YAML files, including [configs/paths.yaml](configs/paths.yaml), are included in `git clone`. The default paths are relative to the repository root:
-
-```yaml
-wsi_data: data/WSI_data
-hypergraphs: data/hypergraphs
-patchgcn: data/patchgcn_graphs
-knn: data/KNN
-kmeans: data/kmeans_groups
+```bash
+python scripts/download_data.py
+# Or download only the STAD cohort:
+python scripts/download_data.py --cohort STAD
 ```
 
-Place the matching data assets in these directories, or link existing data directories to these locations. No YAML editing is needed with this layout, even when launching the scripts from another working directory.
+**Data availability:** the downloader activates after the complete dataset has been uploaded and checked. If the initial upload is still in progress, it reports this clearly; retry the same command after publication. No YAML edits or Hugging Face login are required.
+
+The complete dataset contains **12,096 files**, totaling **142.87 GB (133.05 GiB)**. The downloader supports restarting after interruption and preserves the directory structure. Downloading one cohort installs the inputs for all methods on that cohort. Model weights are downloaded separately in step 2.
+
+All YAML files are included in `git clone`. The supplied [configs/paths.yaml](configs/paths.yaml) uses paths relative to the code repository root; no manual edits are needed with the downloaded layout:
 
 ```text
 HyperMIL/
   configs/paths.yaml
   data/
     WSI_data/
-      TCGA-STAD/
-        patch_ft/       # 512-D NumPy feature arrays
-        patch_coor/     # aligned NumPy patch coordinates
-      TCGA-THCA/        # same layout
-      TCGA-CHOL/
-      TCGA-LIHC/
-    hypergraphs/
-    patchgcn_graphs/
-    KNN/
-    kmeans_groups/
+      TCGA-STAD/        # also TCGA-THCA, TCGA-CHOL, TCGA-LIHC
+        patch_ft/       # frozen 512-D feature arrays
+        patch_coor/     # aligned patch coordinates
+    hypergraphs/        # HyperMIL spatial and semantic incidence
+    patchgcn_graphs/    # compact PatchGCN connectivity
+    KNN/                # DualGCN spatial and feature neighbors
+    kmeans_groups/      # Spatial/Semantic-KMeans-GroupPool inputs
 ```
 
-Filenames and patch ordering must match [manifests/feature_manifest.csv](manifests/feature_manifest.csv). See [data and model distribution](docs/distribution.md) for storage requirements.
+[configs/dataset.yaml](configs/dataset.yaml) selects the public dataset. Its completed-release marker resolves to an immutable dataset commit matching this code release; all data files are downloaded from that fixed commit, without requiring a Hugging Face account. See [data and model distribution](docs/distribution.md) for the input layout and storage requirements.
 
 ### 4. Evaluate
 
@@ -207,7 +204,7 @@ The experiments used NVIDIA GeForce RTX 3090 GPUs. See [training and checkpoint 
 ```text
 configs/        Method configurations and local data-path template
 hypermil/       Shared data loader, training/evaluation engines, interfaces, models
-scripts/        Model download, training, evaluation, and table reproduction
+scripts/        Model/data download, training, evaluation, and table reproduction
 splits/         Public patient folds and fixed patch indices
 manifests/      Frozen feature manifest
 checkpoints/    Model manifest; downloaded .pt files are installed here

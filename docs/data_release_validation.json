@@ -1,0 +1,101 @@
+{
+  "downloader_checks": {
+    "status": "PASS",
+    "cohort_filter_counts": {
+      "STAD": 3717,
+      "THCA": 4662,
+      "CHOL": 351,
+      "LIHC": 3366
+    },
+    "incomplete_or_mismatched_release_rejected": true,
+    "anonymous_fixed_revision_sample": {
+      "status": "PASS",
+      "anonymous_download": true,
+      "revision": "cc40cd9a866d54ca7d60f868b0e78a25c820fecb",
+      "files": 1,
+      "bytes": 3345412,
+      "content_matches_manifest": true
+    },
+    "in_progress_status_live_test": "PASS"
+  },
+  "compact_graph_evaluation": {
+    "status": "PASS",
+    "method": "PatchGCN",
+    "evaluated_folds": 20,
+    "fold_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "cohort_results": [
+      {
+        "cohort": "STAD",
+        "mean": 0.5866950199242892,
+        "sample_sd": 0.05649824481211219,
+        "table_match": true
+      },
+      {
+        "cohort": "THCA",
+        "mean": 0.8974135709435929,
+        "sample_sd": 0.019632718206477003,
+        "table_match": true
+      },
+      {
+        "cohort": "CHOL",
+        "mean": 0.6991604010025063,
+        "sample_sd": 0.2091035266711231,
+        "table_match": true
+      },
+      {
+        "cohort": "LIHC",
+        "mean": 0.7216393425437103,
+        "sample_sd": 0.06942833515977663,
+        "table_match": true
+      }
+    ],
+    "macro": 0.7262270836035247,
+    "macro_table_match": true,
+    "acceptance_criterion": "All 20 fold C-indices and paper table values exactly match; checkpoint weights, shared features and graph edges are unchanged. Floating-point risk differences are reported separately.",
+    "risk_comparison": {
+      "bitwise_identical": false,
+      "maximum_absolute_difference": 1.9073486328125e-06,
+      "strict_allclose_rtol": 1e-06,
+      "strict_allclose_atol": 1e-07,
+      "folds_exceeding_strict_allclose": [
+        {
+          "cohort": "STAD",
+          "fold": 2
+        },
+        {
+          "cohort": "STAD",
+          "fold": 3
+        },
+        {
+          "cohort": "THCA",
+          "fold": 1
+        }
+      ],
+      "all_fold_cindices_unchanged": true
+    }
+  },
+  "hypermil_data_layout_evaluation": {
+    "method": "HyperMIL",
+    "cohort": "CHOL",
+    "fresh_folds": 5,
+    "fold_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "status": "PASS",
+    "mean": 0.7371491228070175,
+    "sample_sd": 0.12020660852015382
+  },
+  "interface_sha256": "5a870dd245f02efbc024fb1e333a0fca2c2cad0b3752143ebe65e6786c4b4390",
+  "data_manifest_sha256": "8a4f0c6c3b659c45f204b7ccd0d72716f84bd5dc10219f4eabd5eb3d6437d6f8",
+  "publication_status": "UPLOAD_IN_PROGRESS"
+}

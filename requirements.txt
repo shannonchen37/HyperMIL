@@ -5,3 +5,4 @@ torch
 torch-geometric
 nystrom-attention
 scikit-learn
+huggingface_hub>=0.34

@@ -32,3 +32,4 @@ training:
   objective: "cox_efron"
 parameters:
   graph_directory_key: "patchgcn"
+  graph_format: "npz"

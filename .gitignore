@@ -8,3 +8,4 @@ runs/
 results/eval/
 results/run_status.json
 data/
+/.cache/huggingface/

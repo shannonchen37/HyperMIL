@@ -1,0 +1,7 @@
+repo_id: shannonhill/HyperMIL-data
+repo_type: dataset
+# A completed release marker resolves to an immutable data commit.
+release_file: release.json
+# Set an explicit commit only when distributing a separately pinned data version.
+revision: null
+manifest: manifests/data_manifest.csv
