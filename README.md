@@ -193,7 +193,7 @@ python scripts/train.py --config configs/hypermil.yaml --cohort STAD --fold 0 --
 
 New runs use the shared trainer with the complete training-patient risk set, Cox loss with Efron correction, and inner-validation checkpoint selection. Model-specific stages are implemented through interfaces. Full-WSI training can require substantial GPU memory.
 
-The experiments used NVIDIA GeForce RTX 3090 GPUs. See [training and checkpoint details](docs/training.md) for training settings and the released inference pipelines.
+The experiments used NVIDIA GeForce RTX 3090 GPUs.
 
 ## Repository structure
 

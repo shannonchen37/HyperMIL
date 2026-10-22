@@ -1,7 +1,7 @@
 {
   ".gitattributes": "2cc3f9fa72ea2419a1f2e9c80f8a59f2c329280ba5b3128f1236fa4fbfa599bf",
   ".gitignore": "b2ecceeb376ebdd23607818a1d3f23e430fc736619fdc5587df5aaf7f912eab5",
-  "README.md": "8fc4066b71a62b389e165801e22012ccc46ecfd03bbec3b95115372a04fd75fd",
+  "README.md": "883d4c816633e623a29b1840261b79bcf3763830d08056e95f0b6e5e8f8248e4",
   "assets/pipeline.png": "4f5ddc6a91a41124558fb612d490f66367c2b01c4336aa434ca031e38cd4b665",
   "checkpoints/manifest.csv": "2a42fa4f399c57f2afa3d3266c92a05a31b5d599b113062e9432972036c429c6",
   "configs/ablation_a1.yaml": "bbd075a9be6470e98b43c99577b8c649f891b625ece653637d3eb388494820a9",
@@ -37,7 +37,6 @@
   "docs/publication.json": "d5b30b13019510a3f1cdd2094fdc30364098d32f9e76ac16aa70d4787d96e6a2",
   "docs/release_verification.json": "f7ea91ee94e4edb16c74bdc742382fb051309e8cbee44f178a70d815f9f4cede",
   "docs/storage.json": "eb60fe18960fbecb69d1d306aaa8d408cf80b76a0c2e7e8b63ad664fe5c444dd",
-  "docs/training.md": "df14fc2da67f3df8342d2653a3009cd66cf285dba0a12ce337016459d5b5640f",
   "docs/verification_plan.md": "4a672ed63b5873f761287f94fc403cae9184eb234863f7ceaccf53b1a547b713",
   "hypermil/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "hypermil/adapters.py": "01f50241b031585aa7b9ba8c182c81d29fcd4196c2077d87118c2dd648a11d2a",
