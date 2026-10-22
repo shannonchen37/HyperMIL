@@ -1,0 +1,5 @@
+wsi_data: /path/to/WSI_data
+hypergraphs: /path/to/hypergraphs
+patchgcn: /path/to/patchgcn_graphs
+knn: /path/to/KNN
+kmeans: /path/to/kmeans_groups

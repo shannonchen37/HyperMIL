@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "model_files": 400,
+  "fresh_evaluated_folds": 400,
+  "table_cells": 105,
+  "passed_table_cells": 105,
+  "issues": [],
+  "per_fold_reference_differences": [],
+  "equivalent_runtime_only_config_snapshots": [
+    "IIHGC/STAD/fold0",
+    "IIHGC/STAD/fold1",
+    "IIHGC/STAD/fold2",
+    "IIHGC/STAD/fold3"
+  ],
+  "total_checkpoint_bytes": 1162648496,
+  "largest_checkpoint_bytes": 32252510
+}

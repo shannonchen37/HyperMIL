@@ -1,0 +1,23 @@
+methods:
+  "MeanPool": "configs/meanpool.yaml"
+  "ABMIL": "configs/abmil.yaml"
+  "DSMIL": "configs/dsmil.yaml"
+  "ACMIL": "configs/acmil.yaml"
+  "DTFD-MIL": "configs/dtfd_mil.yaml"
+  "TransMIL": "configs/transmil.yaml"
+  "AttriMIL": "configs/attrimil.yaml"
+  "DualGCN-MIL": "configs/dualgcn_mil.yaml"
+  "PatchGCN": "configs/patchgcn.yaml"
+  "Spatial-KMeans-GroupPool": "configs/spatial_kmeans_grouppool.yaml"
+  "Semantic-KMeans-GroupPool": "configs/semantic_kmeans_grouppool.yaml"
+  "IIHGC": "configs/iihgc.yaml"
+  "Hyper-AdaC": "configs/hyper_adac.yaml"
+  "HyperMIL": "configs/hypermil.yaml"
+  "A1": "configs/ablation_a1.yaml"
+  "A2": "configs/ablation_a2.yaml"
+  "A3": "configs/ablation_a3.yaml"
+  "A4": "configs/ablation_a4.yaml"
+  "A5": "configs/ablation_a5.yaml"
+  "A6": "configs/ablation_a6.yaml"
+aliases:
+  A0: HyperMIL

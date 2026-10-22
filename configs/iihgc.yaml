@@ -1,0 +1,36 @@
+method: "IIHGC"
+slug: "iihgc"
+interface: "hypermil.interfaces:IIHGCInterface"
+paths_file: "configs/paths.local.yaml"
+data:
+  feature_manifest: "manifests/feature_manifest.csv"
+  patient_folds: "splits/patient_folds.csv"
+  max_patches: 2000
+  patch_selection: "splits/patch_indices.csv"
+  feature_dim: 512
+  feature_dtype: "float32"
+model:
+  factory: "hypermil.models.iihgc:InterModel"
+  args: {}
+  device_argument: false
+  wrap_core: false
+checkpoint:
+  directory: "checkpoints"
+  pattern: "iihgc_{cohort_lower}_fold{fold}.pt"
+evaluation:
+  split: "outer_val"
+  metric: "patient_harrell_c"
+  risk_direction: "higher_risk_shorter_survival"
+  std_ddof: 1
+training:
+  epochs: 100
+  seed: 42
+  optimizer: "Adam"
+  lr: 0.0001
+  weight_decay: 0.0001
+  selection_split: "inner_val"
+  objective: "cox_efron"
+parameters:
+  stage1_factory: "hypermil.models.iihgc:IntraModel"
+  stage1_epochs: 100
+  inter_context: "training_patients_only"

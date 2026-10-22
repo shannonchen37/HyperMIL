@@ -1,0 +1,35 @@
+method: "A3"
+slug: "ablation_a3"
+interface: "hypermil.interfaces:HypergraphInterface"
+paths_file: "configs/paths.local.yaml"
+data:
+  feature_manifest: "manifests/feature_manifest.csv"
+  patient_folds: "splits/patient_folds.csv"
+  max_patches: null
+  patch_selection: null
+  feature_dim: 512
+  feature_dtype: "float32"
+model:
+  factory: "hypermil.adapters:ablation_model"
+  args:
+    variant: "A3"
+  device_argument: true
+  wrap_core: true
+checkpoint:
+  directory: "checkpoints"
+  pattern: "ablation_a3_{cohort_lower}_fold{fold}.pt"
+evaluation:
+  split: "outer_val"
+  metric: "patient_harrell_c"
+  risk_direction: "higher_risk_shorter_survival"
+  std_ddof: 1
+training:
+  epochs: 100
+  seed: 42
+  optimizer: "Adam"
+  lr: 0.0001
+  weight_decay: 0.0001
+  selection_split: "inner_val"
+  objective: "cox_efron"
+parameters:
+  variant: "A3"

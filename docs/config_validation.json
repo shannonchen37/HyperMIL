@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "methods": 20,
+  "cohorts": 4,
+  "folds": 5,
+  "configurations": {
+    "MeanPool": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "ABMIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "DSMIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "ACMIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "DTFD-MIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "TransMIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "AttriMIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "DualGCN-MIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "PatchGCN": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "Spatial-KMeans-GroupPool": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "Semantic-KMeans-GroupPool": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "IIHGC": {
+      "max_patches": 2000,
+      "shared_patient_splits": true,
+      "sample_patches": 2000
+    },
+    "Hyper-AdaC": {
+      "max_patches": 2000,
+      "shared_patient_splits": true,
+      "sample_patches": 2000
+    },
+    "HyperMIL": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "A1": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "A2": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "A3": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "A4": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "A5": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    },
+    "A6": {
+      "max_patches": null,
+      "shared_patient_splits": true,
+      "sample_patches": 12715
+    }
+  }
+}

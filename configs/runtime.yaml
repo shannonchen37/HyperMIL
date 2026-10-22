@@ -1,0 +1,2 @@
+preferred_gpu_models:
+  configs/iihgc.yaml: "NVIDIA GeForce RTX 2080 Ti"

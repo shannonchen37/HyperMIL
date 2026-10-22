@@ -1,0 +1,42 @@
+method: "DualGCN-MIL"
+slug: "dualgcn_mil"
+interface: "hypermil.interfaces:DualGCNInterface"
+paths_file: "configs/paths.local.yaml"
+data:
+  feature_manifest: "manifests/feature_manifest.csv"
+  patient_folds: "splits/patient_folds.csv"
+  max_patches: null
+  patch_selection: null
+  feature_dim: 512
+  feature_dtype: "float32"
+model:
+  factory: "hypermil.models.dualgcn:DualGCNMIL"
+  args:
+    in_dim: 512
+    hidden_dim: 256
+    num_layers: 3
+    att_dim: 128
+    dropout: 0.3
+    jk_mode: "sum"
+  device_argument: false
+  wrap_core: false
+checkpoint:
+  directory: "checkpoints"
+  pattern: "dualgcn_mil_{cohort_lower}_fold{fold}.pt"
+evaluation:
+  split: "outer_val"
+  metric: "patient_harrell_c"
+  risk_direction: "higher_risk_shorter_survival"
+  std_ddof: 1
+training:
+  epochs: 100
+  seed: 42
+  optimizer: "Adam"
+  lr: 0.0001
+  weight_decay: 0.0001
+  selection_split: "inner_val"
+  objective: "cox_efron"
+parameters:
+  graph_directory_key: "knn"
+  feature_k: 6
+  spatial_k: 8
