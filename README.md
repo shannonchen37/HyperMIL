@@ -185,6 +185,21 @@ See [configs/config_index.yaml](configs/config_index.yaml) for all method-to-con
 | A5 | Fixed fusion | [ablation_a5.yaml](configs/ablation_a5.yaml) |
 | A6 | Incidence-based GroupPool | [ablation_a6.yaml](configs/ablation_a6.yaml) |
 
+## Feature extraction and hypergraph construction
+
+The preprocessing code is included for preparing new WSIs. For evaluation with the released checkpoints, use the frozen inputs from the data download above.
+
+```bash
+python -m pip install -r requirements-preprocessing.txt
+# Place raw slides under data/raw_wsi/TCGA-STAD/.
+python scripts/extract_features.py --config configs/preprocessing/features.yaml --cohort STAD
+python scripts/build_hypergraphs.py --config configs/preprocessing/hypergraphs.yaml --cohort STAD
+```
+
+[features.yaml](configs/preprocessing/features.yaml) controls patch sampling and the frozen ResNet-34 extractor. [hypergraphs.yaml](configs/preprocessing/hypergraphs.yaml) controls MGAS and PASG. Both commands accept `STAD`, `THCA`, `CHOL`, and `LIHC` and use repository-relative paths.
+
+PASG fits its slide-specific GMM with **at most 100 EM iterations**, stopping earlier on convergence. This preprocessing budget is independent of the survival model's training epochs. See [preprocessing details](docs/preprocessing.md) for the construction parameters and output formats.
+
 ## Training
 
 ```bash
@@ -198,14 +213,14 @@ The experiments used NVIDIA GeForce RTX 3090 GPUs.
 ## Repository structure
 
 ```text
-configs/        Method configurations and local data-path template
-hypermil/       Shared data loader, training/evaluation engines, interfaces, models
-scripts/        Model/data download, training, evaluation, and table reproduction
+configs/        Method, data-path, and preprocessing configurations
+hypermil/       Shared engines, interfaces, models, and preprocessing
+scripts/        Download, preprocessing, training, evaluation, and reproduction
 splits/         Public patient folds and fixed patch indices
 manifests/      Frozen feature manifest
 checkpoints/    Model manifest; downloaded .pt files are installed here
 results/        Paper tables, comparison summaries, and evaluation outputs
-docs/           Training details, distribution notes, and verification report
+docs/           Preprocessing, distribution notes, and verification reports
 ```
 
 

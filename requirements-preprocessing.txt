@@ -1,0 +1,8 @@
+-r requirements.txt
+networkx
+torchvision
+openslide-python
+openslide-bin
+opencv-python-headless
+Pillow
+tqdm

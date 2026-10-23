@@ -1,0 +1,22 @@
+input_config: configs/hypermil.yaml
+output_root: data/hypergraphs
+runtime:
+  device: cuda:0
+mgas:
+  patch_size: 256.0
+  spatial_radius: 2.9
+  cosine_threshold: 0.75
+  max_depth: 2
+  min_region_size: 2
+  ncut_threshold: 0.8
+pasg:
+  max_components: 10
+  covariance: full
+  concentration: 0.1
+  min_component_mass: 0.001
+  em_max_iter: 100
+  em_tolerance: 0.001
+  seed: 42
+  support_threshold: 2.0
+  top_m: 2
+  temperature: 0.05

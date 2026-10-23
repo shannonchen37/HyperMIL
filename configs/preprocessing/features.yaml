@@ -1,0 +1,45 @@
+data_root: "data/raw_wsi/TCGA-{cohort}"
+save_dir: "data/WSI_data/TCGA-{cohort}"
+exts: [".svs", ".tif", ".tiff", ".ndpi"]
+sampling:
+  mode: dense
+  sample_level: 0
+  patch_size: 256
+  dense_stride: 256
+  seed: 1337
+  use_bg_mask: true
+  min_fg_ratio: 0.25
+mask:
+  bg_mask_level: 1
+  kernel: 3
+  open_iter: 0
+  close_iter: 1
+  min_area: 50
+  keep_largest: false
+  invert: false
+  fallback_max_edge: 4096
+  gaussian_ksize: 0
+  preview: true
+visualization:
+  enable: true
+  downsample: 32
+model:
+  device: auto
+  backbone: resnet34
+  pooling: true
+  pretrained: true
+  transform:
+    resize: 224
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+  loader:
+    batch_size: 128
+    num_workers: 2
+    pin_memory: true
+    persistent_workers: false
+runtime:
+  cpu_workers: 5
+  gpu_workers: 1
+  queue_maxsize: 8
+  gpu_ids: []
+  target_files: []
