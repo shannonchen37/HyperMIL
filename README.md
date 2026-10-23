@@ -187,7 +187,9 @@ See [configs/config_index.yaml](configs/config_index.yaml) for all method-to-con
 
 ## Feature extraction and hypergraph construction
 
-The preprocessing code is included for preparing new WSIs. For evaluation with the released checkpoints, use the frozen inputs from the data download above.
+**We provide the pre-extracted 512-D patch features, aligned coordinates, and precomputed graph/group files for all four cohorts. Reproducing the paper results does not require feature extraction or graph construction.** Download the prepared inputs using the commands in [Download data](#3-download-data), then proceed directly to evaluation.
+
+The preprocessing code below is optional and supports preparing new WSIs or rebuilding the inputs.
 
 ```bash
 python -m pip install -r requirements-preprocessing.txt
