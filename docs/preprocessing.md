@@ -28,7 +28,7 @@ The script reuses existing coordinate files and skips completed feature files. F
 python scripts/build_hypergraphs.py --config configs/preprocessing/hypergraphs.yaml --cohort STAD --family MGAS
 ```
 
-`hypermil/preprocessing/mgas.py` implements the following steps:
+[mgas.py](../hypermil/preprocessing/mgas.py) implements the following steps:
 
 1. Divide level-0 coordinates by the configured patch size, 256 pixels. Connect distinct patch positions whose Euclidean distance is at most 2.9 patch widths and whose feature cosine similarity is at least 0.75.
 2. In each connected component of size `n`, select `floor(sqrt(n))` seeds by descending component degree, breaking ties by patch index. Grow initial regions with multi-source breadth-first traversal. Isolated nodes become singleton hyperedges.
@@ -43,7 +43,7 @@ Outputs are written to `data/hypergraphs/STAD_MGAS_V2/<slide_id>.npz`, using `ro
 python scripts/build_hypergraphs.py --config configs/preprocessing/hypergraphs.yaml --cohort STAD --family PASG
 ```
 
-`hypermil/preprocessing/gmm.py` and `pasg.py` implement:
+[gmm.py](../hypermil/preprocessing/gmm.py) and [pasg.py](../hypermil/preprocessing/pasg.py) implement:
 
 1. Slide-local prototype discovery with ten full-covariance Gaussian components, K-means initialization (`n_init=1`, seed 42), and mixture-weight pseudocount 0.1. Numerical stabilization and the float64 fallback are retained from the original implementation.
 2. EM stops after at most 100 iterations, or earlier when `abs(L_t - L_previous) <= 0.001 * max(1, abs(L_previous))`.

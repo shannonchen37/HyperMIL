@@ -12,8 +12,8 @@ Prognostic information in whole-slide histopathology can depend on both spatial 
 
 The framework has three main components:
 
-- **Multi-Granularity Adaptive Segmentation (MGAS):** recursively partitions a spatial–feature graph and retains both parent and child regions as overlapping structural hyperedges, preserving coarse and fine tissue contexts.
-- **Posterior-Guided Semantic Grouping (PASG):** discovers slide-specific Gaussian-mixture prototypes and connects each patch to its two most similar prototypes through temperature-scaled cosine affinities, forming sparse, soft semantic incidence across spatially separated regions.
+- **[Multi-Granularity Adaptive Segmentation (MGAS)](hypermil/preprocessing/mgas.py):** recursively partitions a spatial–feature graph and retains both parent and child regions as overlapping structural hyperedges, preserving coarse and fine tissue contexts.
+- **[Posterior-Guided Semantic Grouping (PASG)](hypermil/preprocessing/pasg.py):** discovers slide-specific Gaussian-mixture prototypes and connects each patch to its two most similar prototypes through temperature-scaled cosine affinities, forming sparse, soft semantic incidence across spatially separated regions.
 - **Dual-branch learning and adaptive fusion:** independent HGNNs and gated-attention pooling encode the two views. A learned scalar gate fuses the WSI representations, which are averaged within each patient before linear risk prediction with a Cox–Efron objective.
 
 The pipeline starts from frozen **512-dimensional ResNet-34 patch features** and patch coordinates. Hypergraph construction is slide-local and label-independent.
@@ -189,7 +189,7 @@ See [configs/config_index.yaml](configs/config_index.yaml) for all method-to-con
 
 **We provide the pre-extracted 512-D patch features, aligned coordinates, and precomputed graph/group files for all four cohorts. Reproducing the paper results does not require feature extraction or graph construction.** Download the prepared inputs using the commands in [Download data](#3-download-data), then proceed directly to evaluation.
 
-The preprocessing code below is optional and supports preparing new WSIs or rebuilding the inputs.
+The preprocessing code below is optional and supports preparing new WSIs or rebuilding the inputs. The [shared construction script](scripts/build_hypergraphs.py) builds both [MGAS structural hypergraphs](hypermil/preprocessing/mgas.py) and [PASG semantic hypergraphs](hypermil/preprocessing/pasg.py), with PASG prototype fitting implemented in [gmm.py](hypermil/preprocessing/gmm.py).
 
 ```bash
 python -m pip install -r requirements-preprocessing.txt
