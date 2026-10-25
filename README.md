@@ -4,7 +4,7 @@
 
 **Shenrong Chen, Xiangmin Han, Chenggang Yan, Yuhan Gao, and Zongpeng Li**
 
-[Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md)
+[Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) · [Data (Hugging Face)](https://huggingface.co/datasets/shannonhill/HyperMIL-data) · [Data (Zenodo)](https://doi.org/10.5281/zenodo.23567176) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md)
 
 ## Overview
 
@@ -98,7 +98,7 @@ Each method/cohort/fold has one self-contained `.pt` file, such as `hypermil_sta
 
 ### 3. Download data
 
-Download the frozen **512-D patch features**, aligned coordinates, and graph/group files from [Hugging Face Datasets](https://huggingface.co/datasets/shannonhill/HyperMIL-data):
+The prepared **512-D patch features**, aligned coordinates, and graph/group files are available from [Hugging Face Datasets](https://huggingface.co/datasets/shannonhill/HyperMIL-data) and [Zenodo](https://doi.org/10.5281/zenodo.23567176). The following command downloads the files from Hugging Face directly into the repository layout:
 
 ```bash
 python scripts/download_data.py
@@ -109,6 +109,16 @@ python scripts/download_data.py --cohort STAD
 The dataset contains **12,096 files**, totaling **142.87 GB**. Downloads can be resumed by rerunning the same command. Downloading one cohort provides the inputs for all methods on that cohort.
 
 The script saves the data under `data/`, matching the relative paths in [configs/paths.yaml](configs/paths.yaml). No manual path changes or Hugging Face login are required.
+
+**Zenodo alternative:** download every `.tar` archive for the selected cohort from the [Zenodo record](https://zenodo.org/records/23567176) and extract them from the code repository root. STAD has 4 archives, THCA 6, CHOL 1, and LIHC 5. Each archive contains relative `data/` paths, so the extracted inputs work with the same evaluation commands. For example, save all four STAD archives under `downloads/`, then run:
+
+```bash
+for archive in downloads/hypermil_data_stad_*.tar; do
+    tar -xf "$archive"
+done
+```
+
+The Zenodo archives contain the same data files as the Hugging Face release; choose either source. Allow disk space for both the downloaded archives and extracted data when using Zenodo.
 
 ```text
 HyperMIL/

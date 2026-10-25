@@ -1,7 +1,7 @@
 {
   ".gitattributes": "2cc3f9fa72ea2419a1f2e9c80f8a59f2c329280ba5b3128f1236fa4fbfa599bf",
   ".gitignore": "b2ecceeb376ebdd23607818a1d3f23e430fc736619fdc5587df5aaf7f912eab5",
-  "README.md": "603272b14b7d4a6212265bdef3234fc6244054a8eb5f84b47422a1d03ac1849e",
+  "README.md": "5818cca1c1e07d4c18037d3f04bf45ca76f913a553a15c3fe6fa581664fafcc5",
   "assets/pipeline.png": "4f5ddc6a91a41124558fb612d490f66367c2b01c4336aa434ca031e38cd4b665",
   "checkpoints/manifest.csv": "2a42fa4f399c57f2afa3d3266c92a05a31b5d599b113062e9432972036c429c6",
   "configs/ablation_a1.yaml": "bbd075a9be6470e98b43c99577b8c649f891b625ece653637d3eb388494820a9",
@@ -34,7 +34,7 @@
   "docs/config_snapshots/209c667c7440c7779237e0776311c7d3e51eed5580c47aea9ef426bbb968b200.yaml": "209c667c7440c7779237e0776311c7d3e51eed5580c47aea9ef426bbb968b200",
   "docs/config_validation.json": "12b4e48ff7392cff8e4c46b4df03379a87eee2185913143f031be402461159ca",
   "docs/data_release_validation.json": "763268fca3a3afffa21334a5472fe6ad38037d6c660062e6e07b851bacc9b60f",
-  "docs/distribution.md": "440e7ff52fb8a1e8da6beb13a865aa79951130f473b76b423d0a7e4c4b29529d",
+  "docs/distribution.md": "859b19a702ea151f6d591b5a1e466ea5c2082c07eae11890f8504d267fe592d5",
   "docs/portability_validation.json": "290f4def1d98ac795672860b61e7fee7a9b7d1d19d68ab310e87f4d56f92929a",
   "docs/preprocessing.md": "2b13809abdbb84c88c6e412e787eb67ad13033ed55e94507ddb1ff0d2b82d244",
   "docs/publication.json": "d5b30b13019510a3f1cdd2094fdc30364098d32f9e76ac16aa70d4787d96e6a2",

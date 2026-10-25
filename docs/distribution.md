@@ -8,7 +8,7 @@ GitHub permits up to 1,000 assets per release, each under 2 GiB; its documentati
 
 ## Evaluation inputs
 
-The data release contains 12,096 `.npy`/`.npz` files for four cohorts, totaling 142,866,662,028 bytes (142.87 GB / 133.05 GiB). It is hosted separately in [shannonhill/HyperMIL-data](https://huggingface.co/datasets/shannonhill/HyperMIL-data); downloads activate once the complete-release marker has been published. The source repository does not contain the data files.
+The data release contains 12,096 `.npy`/`.npz` files for four cohorts, totaling 142,866,662,028 bytes (142.87 GB / 133.05 GiB). It is available from [Hugging Face Datasets](https://huggingface.co/datasets/shannonhill/HyperMIL-data) and archived on [Zenodo](https://doi.org/10.5281/zenodo.23567176). Both sources contain the same manifest-listed data files. The source repository does not contain the data files.
 
 | Input | Size (GiB) | Used by |
 | --- | ---: | --- |
@@ -19,7 +19,9 @@ The data release contains 12,096 `.npy`/`.npz` files for four cohorts, totaling 
 | Spatial/feature KNN graphs | 3.251 | DualGCN-MIL |
 | GroupPool inputs | 0.054 | Spatial/Semantic-KMeans-GroupPool |
 
-After publication, run `python scripts/download_data.py` to install all inputs, or append `--cohort STAD` for one cohort. The script reads the completed-release marker selected by `configs/dataset.yaml`, checks that it matches the code's manifest, and downloads from the immutable commit named in that marker. It writes only manifest-listed files below `data/`. Until the complete upload is verified, the marker is absent and the downloader exits with a clear publication-status message. An explicit immutable revision can also be set in YAML. Interrupted downloads can be resumed by re-running the same command. Downloading original files directly avoids requiring space for both an archive and its extracted contents. Allow additional disk headroom for model weights, runtime files, and evaluation outputs.
+Run `python scripts/download_data.py` to install all inputs, or append `--cohort STAD` for one cohort. The script reads the completed-release marker selected by `configs/dataset.yaml`, checks that it matches the code's manifest, and downloads from the immutable commit named in that marker. It writes only manifest-listed files below `data/`. An explicit immutable revision can also be set in YAML. Interrupted downloads can be resumed by re-running the same command. Downloading original files directly avoids requiring space for both an archive and its extracted contents. Allow additional disk headroom for model weights, runtime files, and evaluation outputs.
+
+For the Zenodo alternative, download all archive parts for each selected cohort and extract them at the code repository root. There are 16 independent tar archives: 4 for STAD, 6 for THCA, 1 for CHOL, and 5 for LIHC. Each archive contains `data/` paths and can be extracted with `tar -xf <archive>.tar`. The record also supplies `data_manifest.csv`, `archive_manifest.json`, and a README. The archives total approximately 142.89 GB, including tar headers; allow space for the archives and the 142.87 GB of extracted inputs. Downloading and extracting only the selected cohort is supported.
 
 The path keys in `configs/paths.yaml` resolve relative to the code repository root. The same loader and method interfaces use these files for training and evaluation. Patient folds and fixed patch selections remain tracked in GitHub. No raw WSIs or new preprocessing/build-graph source code are included in this data release.
 
