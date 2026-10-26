@@ -1,8 +1,8 @@
 # Distribution
 
-The 400 inference-only `.pt` files contain 1,162,648,496 bytes (about 1.08 GiB). The largest file is 32,252,510 bytes (about 30.8 MiB). Every file is below GitHub's regular Git 100 MiB file limit, but keeping all weights in Git history would make source clones unnecessarily large.
+The 400 inference-only `.pt` files contain 914,128,260 bytes (about 0.85 GiB). The largest file is 9,647,015 bytes (about 9.2 MiB). Every file is below GitHub's regular Git 100 MiB file limit, but keeping all weights in Git history would make source clones unnecessarily large.
 
-Code, YAML configurations, patient/patch split files, manifests and compact evaluation summaries are tracked in Git. The [v1.0.0 release](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) distributes the weights in four cohort archives with SHA256 checksums. Run `python scripts/download_models.py` from the repository root to download and verify all cohorts, or add `--cohort STAD` to download only STAD.
+Code, YAML configurations, patient/patch split files, manifests and compact evaluation summaries are tracked in Git. The [v1.1.0 release](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.1.0) distributes the weights in four cohort archives with SHA256 checksums. Run `python scripts/download_models.py` from the repository root to download and verify all cohorts, or add `--cohort STAD` to download only STAD.
 
 GitHub permits up to 1,000 assets per release, each under 2 GiB; its documentation specifies no total release-size or bandwidth limit. These release assets do not consume Git LFS storage or download quotas. For this model set an external cloud drive is optional and can serve as a download mirror. A checkpoint archive is not a substitute for feature inputs.
 

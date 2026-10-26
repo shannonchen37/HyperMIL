@@ -1,55 +1,18 @@
 {
-  "status": "PASS",
-  "scope": "Relative-path portability regression; original 400-model verification is separate",
   "method": "HyperMIL",
-  "cohort": "STAD",
-  "fold_ids": [
-    0,
-    1,
-    2,
-    3,
-    4
-  ],
-  "fresh_evaluated_folds": 5,
+  "cohort": "CHOL",
+  "fold": 0,
+  "cindex": 0.631578947368421,
+  "checkpoint_sha256": "591683cff88c7e1ee4400116215f06ee048c9efa0f6ce80a6e4fb9d49b8cc23c",
+  "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+  "strict_load": true,
+  "fresh_forward": true,
+  "engine_sha256": "1be83f2efc55b7cccae284baaca5d96fe8244608d5d983bb1cffabadbe0df939",
+  "interface_sha256": "e0141ba0baab578efd5a6fa61ce4a9ec13bd87609d07a6c09aa64eed8fd32f78",
+  "config_sha256": "d32377b42ba98c0f76bb064a7e583c4b2468c418aa5adce8bc79026688fa048b",
+  "max_patches": null,
+  "status": "PASS",
+  "scope": "Single-model release regression using repository-relative paths",
   "launched_outside_repository": true,
-  "default_relative_paths_yaml": "configs/paths.yaml",
-  "reference_result": "0.6200 \u00b1 0.0257",
-  "eval_mean": 0.6200236365978686,
-  "eval_sample_sd": 0.025706493419214195,
-  "fold_metrics": [
-    {
-      "fold": 0,
-      "cindex": 0.6133069828722003,
-      "matches_reference": true,
-      "max_absolute_patient_risk_difference": 0.0
-    },
-    {
-      "fold": 1,
-      "cindex": 0.6631369953673064,
-      "matches_reference": true,
-      "max_absolute_patient_risk_difference": 0.0
-    },
-    {
-      "fold": 2,
-      "cindex": 0.6004872107186358,
-      "matches_reference": true,
-      "max_absolute_patient_risk_difference": 0.0
-    },
-    {
-      "fold": 3,
-      "cindex": 0.6012104909213181,
-      "matches_reference": true,
-      "max_absolute_patient_risk_difference": 0.0
-    },
-    {
-      "fold": 4,
-      "cindex": 0.6219765031098825,
-      "matches_reference": true,
-      "max_absolute_patient_risk_difference": 0.0
-    }
-  ],
-  "validated_method_configurations": 20,
-  "feature_rows_unchanged_except_paths": 1344,
-  "patient_split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
-  "data_loader_sha256": "b129f8446a8b7c83de6bdaf3892f279be6c1ee28fffa6586509389ecc460e8e6"
+  "checkpoint_filename": "hypermil_chol_fold0.pt"
 }

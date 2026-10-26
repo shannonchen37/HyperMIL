@@ -1,9 +1,11 @@
 {
   "files": 400,
-  "bytes": 1162648496,
-  "largest_bytes": 32252510,
+  "bytes": 914128260,
+  "largest_bytes": 9647015,
   "over_100_MiB": [],
+  "ensemble_files": 0,
   "tensor_identity": "ALL_PASS",
   "original_workspace_modified": false,
-  "fresh_eval": "PASS"
+  "fresh_hypermil_folds": 20,
+  "unchanged_previously_verified_folds": 380
 }

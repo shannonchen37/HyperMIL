@@ -3,5 +3,7 @@
   "table_cells": 105,
   "passed": 105,
   "mismatches": [],
-  "pending": 0
+  "pending": 0,
+  "fresh_hypermil_folds": 20,
+  "unchanged_previously_verified_folds": 380
 }

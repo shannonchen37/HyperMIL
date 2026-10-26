@@ -1,6 +1,6 @@
 method: "HyperMIL"
 slug: "hypermil"
-interface: "hypermil.interfaces:PipelineInterface"
+interface: "hypermil.interfaces:HypergraphInterface"
 paths_file: "configs/paths.yaml"
 data:
   feature_manifest: "manifests/feature_manifest.csv"
@@ -31,6 +31,4 @@ training:
   selection_split: "inner_val"
   objective: "cox_efron"
 parameters:
-  pipeline_configuration: "embedded_in_checkpoint"
-  canonical_factory: "hypermil.models.hypermil:make_hypermil"
-  attention_factory: "hypermil.adapters:PatientAttention"
+  variant: "A0"

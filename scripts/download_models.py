@@ -29,7 +29,7 @@ def install_archive(archive,root):
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--cohort',default='ALL',type=str.upper,choices=['ALL','STAD','THCA','CHOL','LIHC'])
-    parser.add_argument('--release',default='v1.0.0')
+    parser.add_argument('--release',default='v1.1.0')
     parser.add_argument('--output-root',type=Path,default=ROOT)
     args=parser.parse_args()
     cohorts=['stad','thca','chol','lihc'] if args.cohort=='ALL' else [args.cohort.lower()]

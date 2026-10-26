@@ -1,13 +1,262 @@
 {
   "status": "PASS",
+  "date": "2026-10-26",
+  "fresh_hypermil_folds": 20,
+  "unchanged_previously_verified_folds": 380,
+  "checkpoint_files": 400,
+  "ensemble_checkpoint_files": 0,
+  "single_model_state_dicts_per_hypermil_checkpoint": 1,
+  "all_tensor_identities_preserved": true,
+  "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+  "engine_sha256": "1be83f2efc55b7cccae284baaca5d96fe8244608d5d983bb1cffabadbe0df939",
+  "interface_sha256": "e0141ba0baab578efd5a6fa61ce4a9ec13bd87609d07a6c09aa64eed8fd32f78",
+  "config_sha256": "d32377b42ba98c0f76bb064a7e583c4b2468c418aa5adce8bc79026688fa048b",
+  "metrics": {
+    "STAD": {
+      "mean": 0.6186948894773786,
+      "sample_sd": 0.047196178874844084
+    },
+    "THCA": {
+      "mean": 0.9303047613456629,
+      "sample_sd": 0.03488293026828615
+    },
+    "CHOL": {
+      "mean": 0.7371491228070175,
+      "sample_sd": 0.12020660852015382
+    },
+    "LIHC": {
+      "mean": 0.7415171518895615,
+      "sample_sd": 0.0671012900858053
+    },
+    "Macro": {
+      "mean": 0.7569164813799051
+    }
+  },
+  "folds": [
+    {
+      "method": "HyperMIL",
+      "cohort": "STAD",
+      "fold": 0,
+      "patients": 78,
+      "cindex": 0.6047430830039525,
+      "checkpoint_sha256": "7fca022463309a33115c81c06b07a134ff1db5fbc24e1e186e632a2c9f2eb164",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_stad_fold0.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "STAD",
+      "fold": 1,
+      "patients": 78,
+      "cindex": 0.6677696889477167,
+      "checkpoint_sha256": "d2c0eafb93120fe2d52fcad195e062a106097677ce4102f7aa48c1e78f7ef86f",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_stad_fold1.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "STAD",
+      "fold": 2,
+      "patients": 77,
+      "cindex": 0.574299634591961,
+      "checkpoint_sha256": "d10fb4c22dc888a40add957e6bf03e473e1c8b12b26ed3ea3a8c40bc74b4c01c",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_stad_fold2.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "STAD",
+      "fold": 3,
+      "patients": 77,
+      "cindex": 0.5770006724949562,
+      "checkpoint_sha256": "01dc0b8bbf025fc06dacd95fddf88b61386dda66e38c912ef0f761c48bf7b8a5",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_stad_fold3.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "STAD",
+      "fold": 4,
+      "patients": 77,
+      "cindex": 0.6696613683483068,
+      "checkpoint_sha256": "25fa3ef00180720697608c3aa9d7896b26d3018e92ec4eec437016fe42d1aad5",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_stad_fold4.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "THCA",
+      "fold": 0,
+      "patients": 101,
+      "cindex": 0.9344262295081968,
+      "checkpoint_sha256": "f7ee2bfaa6f4c0ec0ce703e69ff9617ee08f1df1934b4ffb2c7092a196c1dc50",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_thca_fold0.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "THCA",
+      "fold": 1,
+      "patients": 101,
+      "cindex": 0.8907103825136612,
+      "checkpoint_sha256": "650433080ea317de5e4f1428aef744ee06779c502929dd9b921b958303915532",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_thca_fold1.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "THCA",
+      "fold": 2,
+      "patients": 101,
+      "cindex": 0.9856459330143541,
+      "checkpoint_sha256": "28e4e3f08e59983030a72a9abcbdf1e9f6f60c49c670abc57408dfdcf5d8ebe2",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_thca_fold2.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "THCA",
+      "fold": 3,
+      "patients": 101,
+      "cindex": 0.923728813559322,
+      "checkpoint_sha256": "3e088a2c3773cd91e6154af3865db1bb052dfa12e8230be60610c1a34174b815",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_thca_fold3.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "THCA",
+      "fold": 4,
+      "patients": 101,
+      "cindex": 0.91701244813278,
+      "checkpoint_sha256": "e9a50abfa5e1616b5309c44298510b41053e27d29dd32d56a702acac0800a87f",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_thca_fold4.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "CHOL",
+      "fold": 0,
+      "patients": 8,
+      "cindex": 0.631578947368421,
+      "checkpoint_sha256": "591683cff88c7e1ee4400116215f06ee048c9efa0f6ce80a6e4fb9d49b8cc23c",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_chol_fold0.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "CHOL",
+      "fold": 1,
+      "patients": 8,
+      "cindex": 0.9375,
+      "checkpoint_sha256": "74bc7839025b9a31adeb34f332ab0cc91e1b3f6109d682157ba9febdd292c847",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_chol_fold1.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "CHOL",
+      "fold": 2,
+      "patients": 8,
+      "cindex": 0.75,
+      "checkpoint_sha256": "4e7938f43ff9639dbc3b17b313a7ebcc70108d06a65667d866073d54db6ca8ba",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_chol_fold2.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "CHOL",
+      "fold": 3,
+      "patients": 8,
+      "cindex": 0.6666666666666666,
+      "checkpoint_sha256": "56fc88f4eea828fd4323d00ccb439270f7b5b44c941d85f13e4f848ddac170f6",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_chol_fold3.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "CHOL",
+      "fold": 4,
+      "patients": 7,
+      "cindex": 0.7,
+      "checkpoint_sha256": "02a8aeb4986974f247105482149304add8585a72bac605e494e5c376d9e4645b",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_chol_fold4.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "LIHC",
+      "fold": 0,
+      "patients": 72,
+      "cindex": 0.8391959798994975,
+      "checkpoint_sha256": "2e95b1faf80cf67ff5803efb8420a0fc1cbf6c7dff550cbcfb19302d2147de02",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_lihc_fold0.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "LIHC",
+      "fold": 1,
+      "patients": 72,
+      "cindex": 0.765704584040747,
+      "checkpoint_sha256": "ae3e3d860bfe4eab7fdfab8dc341708f39e0d438717c2eec667cc645709f7377",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_lihc_fold1.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "LIHC",
+      "fold": 2,
+      "patients": 72,
+      "cindex": 0.6684981684981685,
+      "checkpoint_sha256": "c6bde088aa91917e0a7b7a5b9285ae769a6bb60637de1a381d5a42aeab8c88a3",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_lihc_fold2.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "LIHC",
+      "fold": 3,
+      "patients": 72,
+      "cindex": 0.6910229645093946,
+      "checkpoint_sha256": "fb892de2b9f83963d642cc6f0873b88abbc5803f3b6462acd03ac06ffe973f63",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_lihc_fold3.pt",
+      "evaluation_scope": "new_single_model_forward"
+    },
+    {
+      "method": "HyperMIL",
+      "cohort": "LIHC",
+      "fold": 4,
+      "patients": 72,
+      "cindex": 0.7431640625,
+      "checkpoint_sha256": "9338172fd22790cbd03ec0bdfd789b78c78048a06f0bfa7233a604149464a6fa",
+      "split_sha256": "74bc002f17453ea60d27697bf1d722dec6a387301aa9595fbb58dfe7a6591dab",
+      "filename": "hypermil_lihc_fold4.pt",
+      "evaluation_scope": "new_single_model_forward"
+    }
+  ],
   "model_files": 400,
-  "fresh_evaluated_folds": 400,
-  "table_cells": 105,
-  "passed_table_cells": 105,
-  "issues": [],
-  "per_fold_reference_differences": [],
-  "total_checkpoint_bytes": 1162648496,
-  "largest_checkpoint_bytes": 32252510,
+  "total_checkpoint_bytes": 914128260,
+  "largest_checkpoint_bytes": 9647015,
   "cross_validation": {
     "unit": "patient",
     "fold_count": 5,
@@ -24,8 +273,7 @@
       "CHOL",
       "LIHC"
     ],
-    "method_count": 20,
-    "all_method_cohort_pairs_have_five_folds": true
+    "method_count": 20
   },
   "example": {
     "method": "HyperMIL",
@@ -33,29 +281,24 @@
     "fold_metrics": [
       {
         "fold": 0,
-        "cindex": 0.6133069828722003
+        "cindex": 0.6047430830039525
       },
       {
         "fold": 1,
-        "cindex": 0.6631369953673064
+        "cindex": 0.6677696889477167
       },
       {
         "fold": 2,
-        "cindex": 0.6004872107186358
+        "cindex": 0.574299634591961
       },
       {
         "fold": 3,
-        "cindex": 0.6012104909213181
+        "cindex": 0.5770006724949562
       },
       {
         "fold": 4,
-        "cindex": 0.6219765031098825
+        "cindex": 0.6696613683483068
       }
     ]
-  },
-  "runtime_configuration_notes": {
-    "equivalent_snapshot_count": 4
-  },
-  "evaluation_scope": "Initial complete released-checkpoint evaluation; subsequent relative-path validation is recorded separately.",
-  "relative_path_validation_report": "docs/portability_validation.json"
+  }
 }

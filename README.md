@@ -4,7 +4,7 @@
 
 **Shenrong Chen, Xiangmin Han, Chenggang Yan, Yuhan Gao, and Zongpeng Li**
 
-[Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) · [Data (Hugging Face)](https://huggingface.co/datasets/shannonhill/HyperMIL-data) · [Data (Zenodo)](https://doi.org/10.5281/zenodo.23567176) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md)
+[Pretrained models](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.1.0) · [Data (Hugging Face)](https://huggingface.co/datasets/shannonhill/HyperMIL-data) · [Data (Zenodo)](https://doi.org/10.5281/zenodo.23567176) · [Main results](results/table_iii.md) · [Ablation results](results/table_iv.md)
 
 ## Overview
 
@@ -48,9 +48,9 @@ Patient-level Harrell C-index is reported as **mean ± sample standard deviation
 | Semantic-KMeans-GroupPool | 0.5589 ± 0.0246 | 0.8628 ± 0.0239 | 0.6735 ± 0.2030 | 0.7152 ± 0.0594 | 0.7026 |
 | IIHGC | 0.5624 ± 0.0364 | 0.8404 ± 0.0467 | **0.7471 ± 0.0738** | 0.7120 ± 0.0841 | 0.7154 |
 | Hyper-AdaC | 0.5663 ± 0.0304 | 0.7946 ± 0.1256 | 0.7315 ± 0.1101 | 0.6214 ± 0.0899 | 0.6784 |
-| **HyperMIL (Ours)** | **0.6200 ± 0.0257** | **0.9310 ± 0.0254** | 0.7371 ± 0.1202 | **0.7473 ± 0.0629** | **0.7589** |
+| **HyperMIL (Ours)** | **0.6187 ± 0.0472** | **0.9303 ± 0.0349** | 0.7371 ± 0.1202 | **0.7415 ± 0.0671** | **0.7569** |
 
-HyperMIL obtains the highest observed Macro of **0.7589**, with the highest mean on STAD, THCA, and LIHC and the second-highest mean on CHOL. These are point-estimate rankings; the paper reports paired bootstrap uncertainty and discusses checkpoint-selection and external-validation limitations.
+HyperMIL obtains the highest observed Macro of **0.7569**, with the highest mean on STAD, THCA, and LIHC and the second-highest mean on CHOL. These are point-estimate rankings; the paper reports paired bootstrap uncertainty and discusses checkpoint-selection and external-validation limitations.
 
 ### Ablation study
 
@@ -64,11 +64,11 @@ The six variants test the structural branch, semantic branch, structural hierarc
 | A4: Hard semantic | 0.5809 ± 0.0532 | 0.8760 ± 0.0314 | 0.6544 ± 0.1236 | 0.7214 ± 0.0572 | 0.7082 |
 | A5: Fixed fusion | 0.5806 ± 0.0437 | 0.8711 ± 0.0290 | 0.6910 ± 0.1436 | 0.7138 ± 0.0200 | 0.7141 |
 | A6: Incidence-based GroupPool | 0.5912 ± 0.0582 | 0.8778 ± 0.0307 | 0.6872 ± 0.1628 | 0.7303 ± 0.0703 | 0.7216 |
-| **A0: Full pipeline** | 0.6200 ± 0.0257 | 0.9310 ± 0.0254 | 0.7371 ± 0.1202 | 0.7473 ± 0.0629 | 0.7589 |
+| **A0: Full pipeline** | 0.6187 ± 0.0472 | 0.9303 ± 0.0349 | 0.7371 ± 0.1202 | 0.7415 ± 0.0671 | 0.7569 |
 
 ## Code and pretrained models
 
-This release provides HyperMIL, **13 baselines**, and **six ablation variants** through a shared YAML-configured framework. Fresh inference from all **400 model files** reproduced all **105 cells** in Tables III and IV at the reported four-decimal precision. The [verification report](docs/release_verification.json) covers all methods, four cohorts, and all five folds (`0–4`), with HyperMIL as the example.
+This release provides HyperMIL, **13 baselines**, and **six ablation variants** through a shared YAML-configured framework. HyperMIL uses **one network per cohort and fold**. Fresh inference from its **20 single-model checkpoints** reproduces the updated results; the other 380 baseline and ablation checkpoints retain their previously verified results. The [verification report](docs/release_verification.json) covers all methods, four cohorts, and all five folds (`0–4`), with HyperMIL as the example.
 
 ## Quick start
 
@@ -92,7 +92,7 @@ python scripts/download_models.py
 python scripts/download_models.py --cohort STAD
 ```
 
-The [v1.0.0 release](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.0.0) provides four cohort archives, totaling approximately **1.08 GiB**. The script installs weights into `checkpoints/`. Available cohort options are `STAD`, `THCA`, `CHOL`, and `LIHC` (lowercase input is also accepted).
+The [v1.1.0 release](https://github.com/shannonchen37/HyperMIL/releases/tag/v1.1.0) provides four cohort archives, totaling approximately **0.85 GiB**. The script installs weights into `checkpoints/`. Available cohort options are `STAD`, `THCA`, `CHOL`, and `LIHC` (lowercase input is also accepted).
 
 Each method/cohort/fold has one self-contained `.pt` file, such as `hypermil_stad_fold0.pt` or `ablation_a1_stad_fold0.pt`. File hashes and fold metrics are recorded in [checkpoints/manifest.csv](checkpoints/manifest.csv).
 
@@ -172,7 +172,7 @@ HyperMIL configuration in [configs/hypermil.yaml](configs/hypermil.yaml):
 
 ```yaml
 method: HyperMIL
-interface: hypermil.interfaces:PipelineInterface
+interface: hypermil.interfaces:HypergraphInterface
 paths_file: configs/paths.yaml
 data:
   feature_manifest: manifests/feature_manifest.csv

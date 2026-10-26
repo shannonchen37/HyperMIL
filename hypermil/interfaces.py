@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from hypermil.config import build_model,symbol
-from hypermil.adapters import strict,ranks,prepare,modify_incidence,weighted_groups
+from hypermil.adapters import strict,prepare,modify_incidence,weighted_groups
 
 class ModelInterface:
     def __init__(self,config,store,cohort,fold,device):
@@ -117,27 +117,6 @@ class HypergraphInterface(ModelInterface):
     def patient_risk(self,p,index):
         core=self.model.core if self.config['model'].get('wrap_core') else self.model
         return self.core_risk(core,p)
-
-class PipelineInterface(HypergraphInterface):
-    def load(self,payload):self.payload=payload
-    def training_payload(self):
-        payload=super().training_payload();state=payload.pop('model_state')
-        payload.update({'members':[{'architecture':'canonical','weight':1.,'model_state':state}],
-            'combination_rule':'raw_single_model_risk'})
-        return payload
-    def predict(self,patients):
-        vectors=[]
-        for member in self.payload['members']:
-            attention=member['architecture']=='patient_attention'
-            factory=self.params['attention_factory' if attention else 'canonical_factory']
-            model=symbol(factory)(self.device)
-            strict(model,member['model_state'],self.device)
-            vectors.append(torch.stack([self.core_risk(model,p,attention) for p in patients]).cpu().double().numpy())
-            del model;torch.cuda.empty_cache()
-        rule=self.payload['combination_rule']
-        if rule=='raw_single_model_risk':return vectors[0]
-        if rule!='within_fold_percentile_rank_weighted_sum':raise ValueError(rule)
-        return np.stack([ranks(x) for x in vectors],axis=1)@np.asarray([m['weight'] for m in self.payload['members']],dtype=np.float64)
 
 class HyperAdaCInterface(ModelInterface):
     def embedding(self,p):
