@@ -68,7 +68,7 @@ The six variants test the structural branch, semantic branch, structural hierarc
 
 ## Code and pretrained models
 
-This release provides HyperMIL, **13 baselines**, and **six ablation variants** through a shared YAML-configured framework. HyperMIL uses **one network per cohort and fold**. Fresh inference from its **20 single-model checkpoints** reproduces the updated results; the other 380 baseline and ablation checkpoints retain their previously verified results. The [verification report](docs/release_verification.json) covers all methods, four cohorts, and all five folds (`0–4`), with HyperMIL as the example.
+This repository provides HyperMIL, **13 baselines**, and **six ablation variants** through a shared YAML-configured framework. Pretrained models cover all four cohorts and all five patient-level cross-validation folds (`0–4`).
 
 ## Quick start
 

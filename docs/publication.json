@@ -1,14 +1,5 @@
 {
   "release": "v1.1.0",
   "date": "2026-10-26",
-  "hypermil_single_model_checkpoints": 20,
-  "ensemble_checkpoints": 0,
-  "evaluation_engine_unchanged": true,
-  "patient_splits_unchanged": true,
-  "other_method_checkpoints_unchanged": 380,
-  "updated_results": [
-    "Table III HyperMIL",
-    "Table IV A0"
-  ],
   "verification_report": "docs/release_verification.json"
 }
