@@ -1,7 +1,8 @@
 {
   ".gitattributes": "2cc3f9fa72ea2419a1f2e9c80f8a59f2c329280ba5b3128f1236fa4fbfa599bf",
   ".gitignore": "b2ecceeb376ebdd23607818a1d3f23e430fc736619fdc5587df5aaf7f912eab5",
-  "README.md": "87f3289b019f2feaa0c274e840bea673222fe74168deeccfea5b871dc9f716af",
+  "LICENSE": "9858a5bb57fb201829b7604b165a93cb9bb2d67861615a2b07c7dd35e8377d79",
+  "README.md": "90ce4876f91ff4d13a83e61ea09aedaf43ab3d38d13df2c20651de9b4d40f7a0",
   "assets/pipeline.png": "4f5ddc6a91a41124558fb612d490f66367c2b01c4336aa434ca031e38cd4b665",
   "checkpoints/manifest.csv": "3c5ea1d6e22e990c95fc6ec1d88dada6b04d58030bac9c0d5a7446c437fae3cd",
   "configs/ablation_a1.yaml": "bbd075a9be6470e98b43c99577b8c649f891b625ece653637d3eb388494820a9",

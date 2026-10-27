@@ -242,4 +242,4 @@ docs/           Preprocessing, distribution notes, and verification reports
 
 ## License
 
-The HyperMIL source code is released under the MIT License. TCGA-derived clinical tables and split files are provided for research reproducibility and remain subject to TCGA/GDC data-use policies. Upstream model implementations and dependencies retain their respective licenses.
+The HyperMIL source code is released under the [MIT License](LICENSE). TCGA-derived clinical tables and split files are provided for research reproducibility and remain subject to TCGA/GDC data-use policies. Upstream model implementations and dependencies retain their respective licenses.
